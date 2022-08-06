@@ -1,2 +1,5 @@
 # Ignore everything in Volumes, it is large and private data.
 Volumes/*
+
+# Ignore backed up config files.
+*.yml.*
