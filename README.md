@@ -18,8 +18,8 @@ That's my opinion though, if someone else uses this then they can use /var/.
 
 ### bin
 Scripts to help make life easier. Some are pretty basic, but others do nice things like handle the container IDs.
-* install.sh : Install dependencies on an server with apt.
+* install.sh : Install dependencies on a new server with apt.
 * create.sh : Create a new folder with the needed yml file.
 * start.sh : Start all compose containers.
 * stop.sh : Stop all compose containers.
-* get_logs.sh : Create log files rather than using `docker log` command or searching for /var/whatever.
+* get_logs.sh : Create log files rather than using the `docker log` command or searching in /var/whatever.
