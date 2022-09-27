@@ -1,0 +1,27 @@
+2022-08-21 17:49:28+00:00 [Note] [Entrypoint]: Entrypoint script for MariaDB Server 1:10.5.16+maria~focal started.
+2022-08-21 17:49:29+00:00 [Note] [Entrypoint]: Switching to dedicated user 'mysql'
+2022-08-21 17:49:29+00:00 [Note] [Entrypoint]: Entrypoint script for MariaDB Server 1:10.5.16+maria~focal started.
+2022-08-21 17:49:29+00:00 [Note] [Entrypoint]: MariaDB upgrade not required
+2022-08-21 17:49:29 0 [Note] mysqld (mysqld 10.5.16-MariaDB-1:10.5.16+maria~focal) starting as process 1 ...
+2022-08-21 17:49:29 0 [Warning] You need to use --log-bin to make --binlog-format work.
+2022-08-21 17:49:29 0 [Note] InnoDB: Uses event mutexes
+2022-08-21 17:49:29 0 [Note] InnoDB: Compressed tables use zlib 1.2.11
+2022-08-21 17:49:29 0 [Note] InnoDB: Number of pools: 1
+2022-08-21 17:49:29 0 [Note] InnoDB: Using SSE4.2 crc32 instructions
+2022-08-21 17:49:29 0 [Note] mysqld: O_TMPFILE is not supported on /tmp (disabling future attempts)
+2022-08-21 17:49:29 0 [Note] InnoDB: Using Linux native AIO
+2022-08-21 17:49:29 0 [Note] InnoDB: Initializing buffer pool, total size = 134217728, chunk size = 134217728
+2022-08-21 17:49:29 0 [Note] InnoDB: Completed initialization of buffer pool
+2022-08-21 17:49:29 0 [Note] InnoDB: 128 rollback segments are active.
+2022-08-21 17:49:29 0 [Note] InnoDB: Creating shared tablespace for temporary tables
+2022-08-21 17:49:29 0 [Note] InnoDB: Setting file './ibtmp1' size to 12 MB. Physically writing the file full; Please wait ...
+2022-08-21 17:49:29 0 [Note] InnoDB: File './ibtmp1' size is now 12 MB.
+2022-08-21 17:49:29 0 [Note] InnoDB: 10.5.16 started; log sequence number 3002909028; transaction id 3014365
+2022-08-21 17:49:29 0 [Note] Plugin 'FEEDBACK' is disabled.
+2022-08-21 17:49:29 0 [Note] InnoDB: Loading buffer pool(s) from /var/lib/mysql/ib_buffer_pool
+2022-08-21 17:49:29 0 [Note] Server socket created on IP: '::'.
+2022-08-21 17:49:29 0 [Note] Reading of all Master_info entries succeeded
+2022-08-21 17:49:29 0 [Note] Added new Master_info '' to hash table
+2022-08-21 17:49:29 0 [Note] mysqld: ready for connections.
+Version: '10.5.16-MariaDB-1:10.5.16+maria~focal'  socket: '/run/mysqld/mysqld.sock'  port: 3306  mariadb.org binary distribution
+2022-08-21 17:49:29 0 [Note] InnoDB: Buffer pool(s) load completed at 220821 17:49:29

@@ -1,0 +1,17 @@
+AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 172.19.0.3. Set the 'ServerName' directive globally to suppress this message
+AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 172.19.0.3. Set the 'ServerName' directive globally to suppress this message
+[Sun Aug 21 17:49:30.196968 2022] [mpm_prefork:notice] [pid 1] AH00163: Apache/2.4.54 (Debian) PHP/8.0.22 configured -- resuming normal operations
+[Sun Aug 21 17:49:30.197267 2022] [core:notice] [pid 1] AH00094: Command line: 'apache2 -D FOREGROUND'
+172.19.0.1 - - [21/Aug/2022:17:50:16 +0000] "GET /custom_apps/richdocumentscode/proxy.php?req=/hosting/capabilities HTTP/1.1" 200 559 "-" "Nextcloud Server Crawler"
+192.168.1.90 - - [21/Aug/2022:17:50:16 +0000] "GET / HTTP/1.1" 503 18577 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.5060.134 Safari/537.36"
+192.168.1.90 - - [21/Aug/2022:17:50:17 +0000] "GET /core/css/guest.css?v=1b7ca177-45 HTTP/1.1" 200 6144 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.5060.134 Safari/537.36"
+192.168.1.90 - - [21/Aug/2022:17:50:17 +0000] "GET /dist/core-main.js?v=1b7ca177-45 HTTP/1.1" 200 48416 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.5060.134 Safari/537.36"
+192.168.1.90 - - [21/Aug/2022:17:50:17 +0000] "GET /dist/core-maintenance.js?v=1b7ca177-45 HTTP/1.1" 200 1767 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.5060.134 Safari/537.36"
+192.168.1.90 - - [21/Aug/2022:17:50:17 +0000] "GET /core/img/background.png?v=2 HTTP/1.1" 200 10101 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.5060.134 Safari/537.36"
+192.168.1.90 - - [21/Aug/2022:17:50:17 +0000] "GET /core/img/logo/logo.svg?v=1 HTTP/1.1" 200 1297 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.5060.134 Safari/537.36"
+192.168.1.90 - - [21/Aug/2022:17:50:17 +0000] "GET /core/img/actions/error-white.svg?v=1 HTTP/1.1" 200 705 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.5060.134 Safari/537.36"
+192.168.1.90 - - [21/Aug/2022:17:50:17 +0000] "GET /dist/core-common.js?v=1b7ca177-45 HTTP/1.1" 200 2111844 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.5060.134 Safari/537.36"
+192.168.1.90 - - [21/Aug/2022:17:50:18 +0000] "GET /core/img/favicon.ico HTTP/1.1" 200 3756 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.5060.134 Safari/537.36"
+192.168.1.90 - - [21/Aug/2022:17:50:18 +0000] "GET /core/img/manifest.json HTTP/1.1" 200 691 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.5060.134 Safari/537.36"
+192.168.1.90 - - [21/Aug/2022:17:50:18 +0000] "GET /status.php HTTP/1.1" 200 1033 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.5060.134 Safari/537.36"
+192.168.1.90 - - [21/Aug/2022:17:50:18 +0000] "GET /core/img/favicon-touch.png HTTP/1.1" 200 4676 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.5060.134 Safari/537.36"

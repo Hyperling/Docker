@@ -1,0 +1,4 @@
+AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 172.19.0.3. Set the 'ServerName' directive globally to suppress this message
+AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 172.19.0.3. Set the 'ServerName' directive globally to suppress this message
+[Sun Aug 21 17:49:30.196968 2022] [mpm_prefork:notice] [pid 1] AH00163: Apache/2.4.54 (Debian) PHP/8.0.22 configured -- resuming normal operations
+[Sun Aug 21 17:49:30.197267 2022] [core:notice] [pid 1] AH00094: Command line: 'apache2 -D FOREGROUND'
