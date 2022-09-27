@@ -4,3 +4,6 @@ Volumes/*
 # Ignore backed up config files.
 *.yml.*
 
+# Ignore logs
+logs/*
+
