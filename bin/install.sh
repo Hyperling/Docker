@@ -17,6 +17,8 @@ if [[ "$os" == *"Debian"* ]]; then
 elif [[ "$os" == *"Ubuntu"* ]]; then
 	repo="ubuntu"
 	pkgmgr="apt"
+elif [[ $os == "Arch Linux" ]]; then
+	pkgmgr="pacman"
 else
 	echo "Distribution not yet supported." &&
 	exit 1
@@ -40,6 +42,12 @@ if [[ "$pkgmgr" == "apt" ]]; then
 	apt update &&
 	apt install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin &&
 
+	echo "Success!" &&
+	exit 0
+elif [[ $pkgmgr == "pacman" ]]; then
+	pacman -Rcns --noconfirm *docker*
+	
+	pacman -Sy --noconfirm docker docker-compose &&
 	echo "Success!" &&
 	exit 0
 fi
