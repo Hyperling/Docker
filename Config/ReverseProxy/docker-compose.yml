@@ -1,0 +1,20 @@
+# 2022-10-05 Hyperling
+# Reverse Proxy
+# This is a revised version of the original work here: 
+#   https://phoenixnap.com/kb/docker-nginx-reverse-proxy
+#   https://www.docker.com/blog/how-to-use-the-official-nginx-docker-image/
+
+version: '2'
+
+services:
+  app:
+    image: nginx
+    restart: always
+# Instead of using a volume, have the config files in . and COPY them to container with DockerFile
+#    volumes:
+#      - /opt/Docker/Volumes/ReverseProxy/nginx:/etc/nginx/
+    build: ./
+    ports:
+      - 8081:80
+      - 8082:443
+
