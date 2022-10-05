@@ -9,6 +9,7 @@ cd $DOCKER_HOME/Config
 for dir in `ls`; do
   [ -d $dir ] && cd $dir || continue
   pwd
+  [ -e Dockerfile ] && docker compose build
   [ -e docker-compose.yml ] && docker compose up -d
   cd ..
 done
