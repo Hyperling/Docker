@@ -1,0 +1,10 @@
+# Hyperling.com configuration.
+# All that's needed in Node.js
+
+version: '2'
+
+services:
+  app:
+    image: node
+    restart: always
+    build: ./
