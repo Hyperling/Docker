@@ -10,11 +10,7 @@ services:
   app:
     image: nginx
     restart: always
-# Instead of using a volume, have the config files in . and COPY them to container with DockerFile
-#    volumes:
-#      - /opt/Docker/Volumes/ReverseProxy/nginx:/etc/nginx/
     build: ./
     ports:
       - 8081:80
       - 8082:443
-
