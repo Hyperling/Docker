@@ -1,5 +1,5 @@
+# 2022-10-29
 # Hyperling.com configuration.
-# All that's needed in Node.js
 
 version: '2'
 
@@ -8,3 +8,5 @@ services:
     image: node
     restart: always
     build: ./
+    ports: 
+      - 8317:8080
