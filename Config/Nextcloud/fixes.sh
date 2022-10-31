@@ -10,6 +10,7 @@ docker exec -itu www-data nextcloud-app-1 ./occ db:add-missing-columns
 docker exec -itu www-data nextcloud-app-1 ./occ db:add-missing-indices
 docker exec -itu www-data nextcloud-app-1 ./occ db:add-missing-primary-keys
 docker exec -itu www-data nextcloud-app-1 ./occ db:convert-filecache-bigint
+docker exec -it nextcloud-app-1 chown -Rc www-data:www-data .
 
 # 2022-10-30 More additions after moving to Nextcloud version 25.
 docker exec -itu www-data nextcloud-app-1 ./occ db:add-missing-columns
