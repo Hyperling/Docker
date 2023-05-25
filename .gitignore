@@ -7,3 +7,5 @@ Volumes/*
 # Ignore logs
 logs/*
 
+# Ignore any private information
+*private.key

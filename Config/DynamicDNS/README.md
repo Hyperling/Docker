@@ -1,17 +1,28 @@
 # Dynamic DNS Updater
 
-This script is meant to be added to cron if you are using afraid.org as your dynamic DNS provider.
-
-Similar may be possible with sites such as dyn.org or noip.com but are currently not supported.
+This script is meant to be added to cron if you are using afraid.org as your
+dynamic DNS provider. Similar may be possible with sites such as dyn.org or 
+noip.com but are currently not supported.
 
 ## Instructions
 
-Install this git project.
+Install this project.
 
-Add your key to Config/DynamicDNS/private.key
+```
+git clone https://github.com/Hyperling/docker $PROJECT_DIR
+```
+
+Add your DNS account key to $PROJECT_DIR/Config/DynamicDNS/private.key
 
 Add this line to the system's cron scheduling using a command like `crontab -e`.
 
 ```
-5 * * * * /path_to_project/Config/DynamicDNS/update_dns.sh
+5 * * * * $PROJECT_DIR/Config/DynamicDNS/update_dns.sh
 ```
+
+### TESTING
+
+Please ensure all testing is done with the test or dry run flags. If you run 
+this for your private key outside of your network then your Dynamic DNS may 
+become inaccurate. This program is only intended to be run in a production 
+manner on the network which need the Dynamic DNS pointing towards it.
