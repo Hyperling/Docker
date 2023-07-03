@@ -7,3 +7,5 @@ Volumes/*
 # Ignore logs
 logs/*
 
+# Ignore MailServer Files
+Config/MailServer/setup.sh
