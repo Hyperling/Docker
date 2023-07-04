@@ -7,6 +7,9 @@ I am still new to Docker and am likely to make mistakes, but you're welcome to l
 Currently the project only focuses on `apt` based operating systems.
 
 ## How To Use
+Most of these commands benefit from being root. Something like a `sudo su -` if you feel comfortable with it.
+Otherwise ne aware that using sudo may cause file permission conflicts when interacting with the configuration files and folders.
+
 Install the project dependencies.
 ```
 apt install git bash
