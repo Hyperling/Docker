@@ -15,5 +15,17 @@ docker exec -it nextcloud-app-1 chown -Rc www-data:www-data .
 # 2023-02-12 Just for good measure.
 docker exec -itu www-data nextcloud-app-1 ./occ app:update --all
 
+# 2023-07-02 
+# This maybe used to exist, but make sure that Files app is correct.
+docker exec -itu www-data nextcloud-app-1 ./occ files:scan --all
+# This one takes a while.
+docker exec -itu www-data nextcloud-app-1 ./occ files:scan-app-data
+# Extras? Have used the commands in the past and may help in the future.
+docker exec -itu www-data nextcloud-app-1 ./occ maintenance:theme:update
+docker exec -itu www-data nextcloud-app-1 ./occ maintenance:repair
+# May alsp be useful but do not have much experience with them.
+docker exec -itu www-data nextcloud-app-1 ./occ versions:cleanup
+docker exec -itu www-data nextcloud-app-1 ./occ files:cleanup
+
 exit 0
 
