@@ -7,21 +7,28 @@ I am still new to Docker and am likely to make mistakes, but you're welcome to l
 Currently the project only focuses on `apt` based operating systems.
 
 ## How To Use
-`apt install git bash`
+Install the project dependencies.
+```apt install git bash```
 
-`git clone https://github.com/hyperling/docker /opt/Docker`
+Clone the project.
+```git clone https://github.com/hyperling/docker /opt/Docker```
 
-`source /opt/Docker/source.env`
+Load the environment variables.
+```source /opt/Docker/source.env```
 
-`install.sh`
+Install docker to the system.
+```install.sh```
 
-`create.sh PROJECT_NAME`
+Create an area to add a new product.
+```create.sh PROJECT_NAME```
 
-`vi /opt/Docker/Config/PROJECT_NAME/docker-compose.yml`
+Edit the project's details.
+```vi /opt/Docker/Config/PROJECT_NAME/docker-compose.yml```
 
-`start.sh`
+Start all of the docer projects.
+```start.sh```
 
-Cross your fingers and hope to profit.
+Cross your fingers and hope to profit!
 
 ## Folders
 
