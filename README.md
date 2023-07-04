@@ -1,19 +1,26 @@
 # My Docker Setup
 Scripting my way into the Docker world.
-Was unable to find a good tutorial on using and managing containers so this is what made sense to me based on practicing with `docker-compose`.
-I am still very new to Docker and am likely to make mistakes, but you're welcome to learn with me. ;)
+Was unable to find a good tutorial on using and managing containers so this is what made sense to me based on practice with `docker-compose`.
+I am still new to Docker and am likely to make mistakes, but you're welcome to learn with me. ;)
 
 ## Disclaimer
 Currently the project only focuses on `apt` based operating systems.
 
 ## How To Use
 `apt install git bash`
+
 `git clone https://github.com/hyperling/docker /opt/Docker`
+
 `source /opt/Docker/source.env`
+
 `install.sh`
+
 `create.sh PROJECT_NAME`
+
 `vi /opt/Docker/Config/PROJECT_NAME/docker-compose.yml`
+
 `start.sh`
+
 Cross your fingers and hope to profit.
 
 ## Folders
