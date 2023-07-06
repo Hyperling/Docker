@@ -26,15 +26,15 @@ How to first begin using this subproject.
 Tasks which will also likely come up while using this subproject.
 ## Stop
 If you need to halt the system you may use either stop or down.
-    ```
-    # docker compose stop
-    # docker compose down
-    ```
+```
+# docker compose stop
+# docker compose down
+```
 ## Upgrade
 Upgrading the containers should be as easy as this:
-    ```
-    # docker compose down
-    # docker compose pull
-    # docker compose build
-    # docker compose up -d
-    ```
+```
+# docker compose down
+# docker compose pull
+# docker compose build
+# docker compose up -d
+```
