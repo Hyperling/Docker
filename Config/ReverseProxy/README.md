@@ -52,7 +52,7 @@ This is essentially an upgrade but there is no pull.
 # docker compose build
 # docker compose up -d
 ```
-If you'd like it as a one command:
+If you'd like it as a one-line command:
 ```
 # docker compose down && docker compose build && docker compose up -d
 ```
