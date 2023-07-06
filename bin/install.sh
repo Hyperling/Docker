@@ -30,7 +30,7 @@ echo "pkgmgr=$pkgmgr"
 ## Main ##
 
 if [[ "$pkgmgr" == "apt" ]]; then
-	apt purge docker docker-engine docker.io containerd runc
+	apt purge docker docker-engine docker.io containerd runc podman-docker
 
 	apt update &&
 	apt install -y ca-certificates curl gnupg lsb-release &&
@@ -40,13 +40,13 @@ if [[ "$pkgmgr" == "apt" ]]; then
 		"deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/$repo \
 		$(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null &&
 	apt update &&
-	apt install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin &&
+	apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin &&
 
 	echo "Success!" &&
 	exit 0
 elif [[ $pkgmgr == "pacman" ]]; then
 	pacman -Rcns --noconfirm *docker*
-	
+
 	pacman -Sy --noconfirm docker docker-compose &&
 	echo "Success!" &&
 	exit 0
