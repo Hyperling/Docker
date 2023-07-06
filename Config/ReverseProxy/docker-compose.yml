@@ -1,6 +1,6 @@
 # 2022-10-05 Hyperling
 # Reverse Proxy
-# This is a revised version of the original work here: 
+# This is a revised version of the original work here:
 #   https://phoenixnap.com/kb/docker-nginx-reverse-proxy
 #   https://www.docker.com/blog/how-to-use-the-official-nginx-docker-image/
 
@@ -12,5 +12,5 @@ services:
     restart: always
     build: ./
     ports:
-      - 8081:80
-      - 8082:443
+      - 80:80
+      - 443:443
