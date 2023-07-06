@@ -15,11 +15,12 @@ services:
       - "80:80"
       - "443:443"
     volumes:
+      - ../../Volumes/ReverseProxy/letsencrypt:/etc/nginx/letsencrypt
       - ../../Volumes/ReverseProxy/letsencrypt-certs:/etc/nginx/certs
     command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
   certbot:
     image: certbot/certbot
     volumes:
-      - ../../Volumes/ReverseProxy/letsencrypt-etc:/etc/letsencrypt
+      - ../../Volumes/ReverseProxy/letsencrypt:/etc/letsencrypt
       - ../../Volumes/ReverseProxy/letsencrypt-certs:/var/www/certbot
     entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
