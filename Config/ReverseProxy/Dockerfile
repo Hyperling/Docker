@@ -4,6 +4,9 @@
 
 FROM nginx
 
+# Clear old configurations.
+RUN rm -rfv /etc/nginx/conf.d/*
+
 # Add all the configuration files to the environment.
 COPY ./config/nginx.conf /etc/nginx/nginx.conf
 COPY ./config/conf.d/*.* /etc/nginx/conf.d/
