@@ -6,7 +6,7 @@ FROM nginx
 
 # Add all the configuration files to the environment.
 COPY ./config/nginx.conf /etc/nginx/nginx.conf
-COPY ./config/conf.d/* /etc/nginx/conf.d/
+COPY ./config/conf.d/*.* /etc/nginx/conf.d/
 
 # Create "working" certificates for the example configuration file.
 RUN mkdir -p /etc/nginx/certs/example.com

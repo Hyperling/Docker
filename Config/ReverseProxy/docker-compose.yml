@@ -1,8 +1,9 @@
 # 2022-10-05 Hyperling
-# Reverse Proxy
-# This is a revised version of the original work here:
+# Reverse Proxy with LetsEncrypt Certbot.
+# This is a revised version of these works:
 #   https://phoenixnap.com/kb/docker-nginx-reverse-proxy
 #   https://www.docker.com/blog/how-to-use-the-official-nginx-docker-image/
+#   https://pentacent.medium.com/nginx-and-lets-encrypt-with-docker-in-less-than-5-minutes-b4b8a60d3a71
 
 version: '3'
 
@@ -11,5 +12,14 @@ services:
     build: .
     restart: always
     ports:
-      - 80:80
-      - 443:443
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ../../Volumes/ReverseProxy/letsencrypt-certs:/etc/nginx/certs-letsencrypt
+    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
+  certbot:
+    image: certbot/certbot
+    volumes:
+      - ../../Volumes/ReverseProxy/letsencrypt-etc:/etc/letsencrypt
+      - ../../Volumes/ReverseProxy/letsencrypt-certs:/var/www/certbot
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
