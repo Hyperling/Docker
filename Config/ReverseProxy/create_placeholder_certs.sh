@@ -16,15 +16,16 @@ mkdir -pv $DIR/../../Volumes/ReverseProxy/letsencrypt-certs
 # Loop over the proxy configuration files and ensure they have certs.
 ls $DIR/config/conf.d/*.* | while read file; do
 	filename=`basename $file`
-	echo "Checking $filename:"
+	echo "*** Checking $filename ***"
 	if [[ ! -d $CERT_DIR/$filename ]]; then
-		echo "  Creating self-signed certs at $CERT_DIR/$filename."
+		echo "Creating self-signed certs at $CERT_DIR/$filename."
 		mkdir -pv $CERT_DIR/$filename
 		openssl req -new -x509 -days 3 -nodes \
 				-out $CERT_DIR/$filename/fullchain.pem \
 				-keyout $CERT_DIR/$filename/privkey.pem \
 				-subj "/CN=$filename/O=$filename/C=XX"
+		ls -lh $CERT_DIR/$filename/*
 	else
-		echo "  Certs already exist!"
+		echo "Certs already exist!"
 	fi
 done
