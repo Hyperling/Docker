@@ -1,5 +1,5 @@
 # 2022-10-05 Hyperling
-# Move config to nginx container. 
+# Move config to nginx container.
 # This is because nginx image does not play well with Volumes.
 # Nextcloud and MariaDB created files in their folders fine, but nginx stays empty.
 
