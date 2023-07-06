@@ -1,4 +1,4 @@
-# Ignore everything in Volumes, it is large and private data.
+# Ignore everything in Volumes, it contains large and private data.
 Volumes/*
 
 # Ignore backed up config files.
