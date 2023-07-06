@@ -8,4 +8,4 @@ Volumes/*
 logs/*
 
 # Ignore private reverse proxy configurations.
-Config/ReverseProxy/config/cond.d/*
+Config/ReverseProxy/config/conf.d/*
