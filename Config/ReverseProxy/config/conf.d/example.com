@@ -33,8 +33,8 @@ server {
     server_name example.com;
 
     # The certs being used for the website.
-    ssl_certificate /etc/nginx/certs/example.com/cert.crt;
-    ssl_certificate_key /etc/nginx/certs/example.com/cert.key;
+    ssl_certificate /etc/nginx/certs/example.com/fullchain.pem;
+    ssl_certificate_key /etc/nginx/certs/example.com/privkey.pem;
 
     # Send traffic to upstream server
     location / {
