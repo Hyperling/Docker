@@ -25,7 +25,7 @@ How to first begin using this subproject.
     ```
 
 ## DO NOT
-* Edit any configurations or website data inside the container. It is destroyed on each build
+* Edit any configurations or website data inside the container. It is destroyed on each build.
     * Instead, modify the files in `./config/` then use the Update Config commands below.
 * Install any additional software inside of the container. It will not persist a down and up.
     * Instead, add what is needed to the `docker-compose.yml` or `Dockerfile` to be done on each rebuild.
