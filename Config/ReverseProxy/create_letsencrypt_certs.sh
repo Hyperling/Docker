@@ -51,8 +51,8 @@ fi
 ls $DIR/config/conf.d/*.* | while read file; do
 	filename=`basename $file`
 
-	if [[ $filename == "example.com" ]]; then
-		echo "Skipping $filename since it is only for testing."
+	if [[ $filename == *"example.com"* ]]; then
+		echo "Skipping $filename since it is only an example."
 		continue
 	fi
 
