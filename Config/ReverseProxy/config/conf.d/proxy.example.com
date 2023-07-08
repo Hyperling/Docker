@@ -4,22 +4,22 @@
 
 ## Instructions ##
 # Add this without the comment to your /etc/hosts to test that it is working,
-#   YOUR_DOCKER_SERVER_IP example.com
+#   YOUR_DOCKER_SERVER_IP proxy.example.com
 # If testing locally on a workstation,
-#   127.0.0.1 example.com
+#   127.0.0.1 proxy.example.com
 # Then to test, first start the container,
 #   cd $DOCKER_HOME/Config/ReverseProxy && docker compose build && docker compose up -d
 # Then from the system with the modified /etc/hosts,
-#   curl --insecure example.com
+#   curl --insecure proxy.example.com
 # You should see activity in the container log as well as the contents of the
-# proxied website in the terminal, NOT example.com. If using a browser then you
-# should notice that the URL is still example.com but the website is correct.
+# proxied website in the terminal, NOT proxy.example.com. If using a browser then you
+# should notice that the URL is still proxy.example.com but the website is correct.
 
 # Force HTTPS
 server {
 
     listen 80;
-    server_name example.com;
+    server_name proxy.example.com;
 
     # Redirect to a more secure protocol.
     return 301 https://$host$request_uri;
@@ -30,11 +30,11 @@ server {
 server {
 
     listen 443 ssl;
-    server_name example.com;
+    server_name proxy.example.com;
 
     # The certs being used for the website.
-    ssl_certificate /etc/nginx/certs/example.com/fullchain.pem;
-    ssl_certificate_key /etc/nginx/certs/example.com/privkey.pem;
+    ssl_certificate /etc/nginx/certs/proxy.example.com/fullchain.pem;
+    ssl_certificate_key /etc/nginx/certs/proxy.example.com/privkey.pem;
 
     # Send traffic to upstream server
     location / {
@@ -59,7 +59,7 @@ server {
         # Or alternatively, do it like the force of HTTPS if not your server.
         #return 301 https://website.name/$request_uri;
 
-        # This should forward you from 'example.com' to a real site:
+        # This should forward you from 'proxy.example.com' to a real site:
         proxy_pass https://hyperling.com;
     }
 
