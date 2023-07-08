@@ -38,10 +38,12 @@ server {
 
     # Send traffic to upstream server
     location / {
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-Proto https;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwaded_for;
+
+        # These cause "400 Bad Request Request Header Or Cookie Too Large"?
+        #proxy_set_header Host $host;
+        #proxy_set_header X-Real-IP $remote_addr;
+        #proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
 
         ## General format is PROTOCOL://SERVER:PORT. For example:
         #
@@ -52,10 +54,10 @@ server {
         #proxy_pass http://192.168.1.80:8080;
         #
         # If forwarding to an external source:
-        #proxy_pass https://website.name/URI;
+        #proxy_pass https://website.name;
         #
         # Or alternatively, do it like the force of HTTPS if not your server.
-        #return 301 https://website.name/URI;
+        #return 301 https://website.name/$request_uri;
 
         # This should forward you from 'example.com' to a real site:
         proxy_pass https://hyperling.com;
