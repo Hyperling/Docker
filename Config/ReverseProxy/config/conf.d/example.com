@@ -11,7 +11,7 @@
 #   cd $DOCKER_HOME/Config/ReverseProxy && docker compose build && docker compose up -d
 # Then from the system with the modified /etc/hosts,
 #   curl --insecure example.com
-# You should a blip in the log of the container as well as the contents of the
+# You should see activity in the container log as well as the contents of the
 # proxied website in the terminal, NOT example.com. If using a browser then you
 # should notice that the URL is still example.com but the website is correct.
 
@@ -38,7 +38,10 @@ server {
 
     # Send traffic to upstream server
     location / {
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-Proto https;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwaded_for;
 
         ## General format is PROTOCOL://SERVER:PORT. For example:
         #
@@ -51,7 +54,7 @@ server {
         # If forwarding to an external source:
         #proxy_pass https://website.name/URI;
         #
-        # Or alternatively, do it like the force of HTTPS:
+        # Or alternatively, do it like the force of HTTPS if not your server.
         #return 301 https://website.name/URI;
 
         # This should forward you from 'example.com' to a real site:
