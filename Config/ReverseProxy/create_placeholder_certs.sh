@@ -1,6 +1,8 @@
 #!/bin/bash
 # Create a fake cert for each file in config/conf.d/.
 
+## Variables ##
+
 DIR=`dirname $0`
 if [[ $DIR == \.* ]]; then
 	DIR=`pwd`
@@ -10,8 +12,10 @@ fi
 CERT_DIR=$DIR/../../Volumes/ReverseProxy/letsencrypt-certs
 echo "CERT_DIR=$CERT_DIR"
 
+## Main ##
+
 # Create the directory if it does not exist.
-mkdir -pv $DIR/../../Volumes/ReverseProxy/letsencrypt-certs
+mkdir -pv $CERT_DIR
 
 # Loop over the proxy configuration files and ensure they have certs.
 ls $DIR/config/conf.d/*.* | while read file; do
@@ -29,3 +33,5 @@ ls $DIR/config/conf.d/*.* | while read file; do
 		echo "Certs already exist!"
 	fi
 done
+
+exit 0
