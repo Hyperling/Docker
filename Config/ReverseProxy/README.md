@@ -35,7 +35,7 @@ How to first begin using this subproject.
 Tasks which will also likely come up while using this subproject.
 
 ## Stop
-If you need to halt the system you may use either stop or down.
+If the proxy needs turned off either stop or down may be used.
 ```
 # docker compose stop
 # docker compose down
@@ -59,7 +59,7 @@ This is essentially an upgrade but there is no pull.
 # docker compose build
 # docker compose up -d
 ```
-If you'd like it as a one-line command:
+If wanted as a one-line command:
 ```
 # docker compose down && docker compose build && docker compose up -d
 ```
