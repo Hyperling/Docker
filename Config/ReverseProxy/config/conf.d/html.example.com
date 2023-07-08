@@ -1,25 +1,25 @@
-# 2022-10-05 Hyperling
+# 2023-07-08 Hyperling
 # A dummy test file since true scripts are being kept private.
 # This should help anyone understand how the project is being used.
 
 ## Instructions ##
 # Add this without the comment to your /etc/hosts to test that it is working,
-#   YOUR_DOCKER_SERVER_IP example.com
+#   YOUR_DOCKER_SERVER_IP html.example.com
 # If testing locally on a workstation,
-#   127.0.0.1 example.com
+#   127.0.0.1 html.example.com
 # Then to test, first start the container,
 #   cd $DOCKER_HOME/Config/ReverseProxy && docker compose build && docker compose up -d
 # Then from the system with the modified /etc/hosts,
-#   curl --insecure example.com
+#   curl --insecure html.example.com
 # You should see activity in the container log as well as the contents of the
-# proxied website in the terminal, NOT example.com. If using a browser then you
-# should notice that the URL is still example.com but the website is correct.
+# proxied website in the terminal, NOT html.example.com. If using a browser then you
+# should notice that the URL is still html.example.com but the website is correct.
 
 # Force HTTPS
 server {
 
     listen 80;
-    server_name example.com;
+    server_name html.example.com;
 
     # Redirect to a more secure protocol.
     return 301 https://$host$request_uri;
@@ -30,37 +30,13 @@ server {
 server {
 
     listen 443 ssl;
-    server_name example.com;
+    server_name html.example.com;
 
     # The certs being used for the website.
-    ssl_certificate /etc/nginx/certs/example.com/fullchain.pem;
-    ssl_certificate_key /etc/nginx/certs/example.com/privkey.pem;
+    ssl_certificate /etc/nginx/certs/html.example.com/fullchain.pem;
+    ssl_certificate_key /etc/nginx/certs/html.example.com/privkey.pem;
 
-    # Send traffic to upstream server
-    location / {
-        proxy_set_header X-Forwarded-Proto https;
-
-        # These cause "400 Bad Request Request Header Or Cookie Too Large"?
-        #proxy_set_header Host $host;
-        #proxy_set_header X-Real-IP $remote_addr;
-        #proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-
-        ## General format is PROTOCOL://SERVER:PORT. For example:
-        #
-        # If using a domain name:
-        #proxy_pass http://YOUR_SERVER_NAME:8080;
-        #
-        # If using an IP address:
-        #proxy_pass http://192.168.1.80:8080;
-        #
-        # If forwarding to an external source:
-        #proxy_pass https://website.name;
-        #
-        # Or alternatively, do it like the force of HTTPS if not your server.
-        #return 301 https://website.name/$request_uri;
-
-        # This should forward you from 'example.com' to a real site:
-        proxy_pass https://hyperling.com;
-    }
+    # Load the static web content.
+    root /etc/nginx/html/html.example.com;
 
 }
