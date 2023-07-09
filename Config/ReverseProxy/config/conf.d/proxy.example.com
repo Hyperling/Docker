@@ -38,13 +38,6 @@ server {
 
     # Send traffic to upstream server
     location / {
-        proxy_set_header X-Forwarded-Proto https;
-
-        # These cause "400 Bad Request Request Header Or Cookie Too Large"?
-        #proxy_set_header Host $host;
-        #proxy_set_header X-Real-IP $remote_addr;
-        #proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-
         ## General format is PROTOCOL://SERVER:PORT. For example:
         #
         # If using a domain name:
@@ -52,6 +45,9 @@ server {
         #
         # If using an IP address:
         #proxy_pass http://192.168.1.80:8080;
+        #
+        # If using an upstream server:
+        #proxy_pass http://example-proxy-site;
         #
         # If forwarding to an external source:
         #proxy_pass https://website.name;
