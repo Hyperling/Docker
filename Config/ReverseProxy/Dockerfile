@@ -18,3 +18,9 @@ RUN rm -rfv /etc/nginx/html
 # Add any static HTML websites.
 COPY ./config/html /etc/nginx/html
 RUN rm -rfv /etc/nginx/html/README*
+
+## Upstream Hosts ##
+RUN rm -rfv /etc/nginx/hosts
+COPY ./config/hosts /etc/nginx/hosts
+RUN rm -rfv /etc/nginx/hosts/README*
+
