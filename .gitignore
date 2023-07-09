@@ -10,3 +10,6 @@ logs/*
 # Ignore private reverse proxy configurations.
 Config/ReverseProxy/config/conf.d/*.*
 Config/ReverseProxy/config/html/*.*
+
+# Ignore MailServer Files
+Config/MailServer/setup.sh

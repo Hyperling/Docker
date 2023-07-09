@@ -1,0 +1,12 @@
+# 2022-10-29
+# Hyperling.com configuration.
+
+version: '2'
+
+services:
+  app:
+    image: node
+    restart: always
+    build: ./
+    ports: 
+      - 8317:8080
