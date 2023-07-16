@@ -10,7 +10,7 @@ RUN rm -rfv /etc/nginx/conf.d
 # Add all the configuration files to the environment.
 COPY ./config/nginx.conf /etc/nginx/nginx.conf
 COPY ./config/conf.d /etc/nginx/conf.d
-RUN rm -rfv /etc/nginx/nginx.conf/README*
+RUN rm -rfv /etc/nginx/conf.d/README*
 
 ## Hosted Sites ##
 # Clear old sites.
@@ -23,4 +23,9 @@ RUN rm -rfv /etc/nginx/html/README*
 RUN rm -rfv /etc/nginx/hosts
 COPY ./config/hosts /etc/nginx/hosts
 RUN rm -rfv /etc/nginx/hosts/README*
+
+## Load Balancing and Host-Based Port Forwarding ##
+RUN rm -rfv /etc/nginx/load.conf.d
+COPY ./config/load.conf.d /etc/nginx/load.conf.d
+RUN rm -rfv /etc/nginx/load.conf.d/README*
 

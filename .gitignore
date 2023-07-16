@@ -8,9 +8,12 @@ Volumes/*
 logs/*
 
 # Ignore private reverse proxy configurations.
-Config/ReverseProxy/config/conf.d/*.*
-Config/ReverseProxy/config/html/*.*
-Config/ReverseProxy/config/hosts/*.*
+Config/ReverseProxy/config/conf.d/*
+Config/ReverseProxy/config/html/*
+Config/ReverseProxy/config/hosts/*
+Config/ReverseProxy/config/load.conf.d/*
+Config/ReverseProxy/config/mail.conf.d/*
 
 # Ignore MailServer Files
 Config/MailServer/setup.sh
+
