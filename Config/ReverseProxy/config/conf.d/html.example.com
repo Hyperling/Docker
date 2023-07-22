@@ -21,8 +21,15 @@ server {
     listen 80;
     server_name html.example.com;
 
+    location /.well-known/acme-challenge/ {
+        default_type "text/plain";
+        root /etc/nginx/letsencrypt/;
+    }
+
     # Redirect to a more secure protocol.
-    return 301 https://$host$request_uri;
+    location / {
+        return 301 https://$host$request_uri;
+    }
 
 }
 
@@ -36,7 +43,14 @@ server {
     ssl_certificate /etc/nginx/certs/html.example.com/fullchain.pem;
     ssl_certificate_key /etc/nginx/certs/html.example.com/privkey.pem;
 
+    location /.well-known/acme-challenge/ {
+        default_type "text/plain";
+        root /etc/nginx/letsencrypt/;
+    }
+
     # Load the static web content.
-    root /etc/nginx/html/html.example.com;
+    location / {
+        root /etc/nginx/html/html.example.com;
+    }
 
 }

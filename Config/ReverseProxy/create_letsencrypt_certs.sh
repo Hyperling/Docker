@@ -71,8 +71,7 @@ ls $DIR/config/conf.d/*.* | while read file; do
 
 		echo "Attempting to create real certs at $CERT_DIR/$filename."
 		docker exec reverseproxy-certbot-1 certbot certonly -n --webroot \
-				-w /etc/letsencrypt --agree-tos -m $email -d $filename \
-				--dry-run # FORTESTING
+				-w /etc/letsencrypt --agree-tos -m $email -d $filename
 
 		ls -lh $CERT_DIR/$filename/*
 	else

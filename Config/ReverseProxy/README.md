@@ -23,6 +23,15 @@ How to first begin using this subproject.
     # docker logs reverseproxy-app-1
     # docker logs reverseproxy-certbot-1
     ```
+1. Create the real certificates.
+    ```
+    # ./create_letsencrypt_certs.sh
+    ```
+1. Add a job to crontab for keeping the certs valid.
+    ```
+    # crontab -e
+    X Y * * * docker exec reverseproxy-certbot-1 certbot renew
+    ```
 
 ## DO NOT
 * Edit any configurations or website data inside the container. It is destroyed on each build.

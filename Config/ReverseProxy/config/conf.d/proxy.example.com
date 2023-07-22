@@ -21,8 +21,15 @@ server {
     listen 80;
     server_name proxy.example.com;
 
+    location /.well-known/acme-challenge/ {
+        default_type "text/plain";
+        root /etc/nginx/letsencrypt/;
+    }
+
     # Redirect to a more secure protocol.
-    return 301 https://$host$request_uri;
+    location / {
+        return 301 https://$host$request_uri;
+    }
 
 }
 
@@ -35,6 +42,11 @@ server {
     # The certs being used for the website.
     ssl_certificate /etc/nginx/certs/proxy.example.com/fullchain.pem;
     ssl_certificate_key /etc/nginx/certs/proxy.example.com/privkey.pem;
+
+    location /.well-known/acme-challenge/ {
+        default_type "text/plain";
+        root /etc/nginx/letsencrypt/;
+    }
 
     # Send traffic to upstream server
     location / {
