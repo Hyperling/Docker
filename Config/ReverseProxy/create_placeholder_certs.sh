@@ -18,7 +18,7 @@ echo "CERT_DIR=$CERT_DIR"
 mkdir -pv $CERT_DIR
 
 # Loop over the proxy configuration files and ensure they have certs.
-ls $DIR/config/conf.d/*.* | while read file; do
+grep -l proxy_pass $DIR/config/conf.d/*.* | while read file; do
 	filename=`basename $file`
 	echo "*** Checking $filename ***"
 	if [[ ! -d $CERT_DIR/$filename ]]; then
