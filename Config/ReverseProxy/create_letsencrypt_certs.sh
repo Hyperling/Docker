@@ -59,7 +59,7 @@ ls $DIR/config/conf.d/*.* | while read file; do
 	echo "*** Checking $filename ***"
 	if [[ -d $CERT_DIR/$filename ]]; then
 		echo "Getting the domains which need the cert."
-		domains=`grep server_name $file`
+		domains=`grep -v '$server_name' $file | grep server_name`
 
 		# Clean up the data by removing the directive and semi-colon, changing
 		#  spaces to commas, and making sure there are no gaps.
@@ -70,8 +70,8 @@ ls $DIR/config/conf.d/*.* | while read file; do
 		echo "Domains='$domains'"
 
 		echo "Attempting to create real certs at $CERT_DIR/$filename."
-		docker exec reverseproxy-certbot-1 certbot certonly -n --standalone \
-				--agree-tos -m $email -d $filename
+		docker exec reverseproxy-certbot-1 certbot certonly -n --webroot \
+				-w /etc/letsencrypt --agree-tos -m $email -d $filename
 
 		ls -lh $CERT_DIR/$filename/*
 	else

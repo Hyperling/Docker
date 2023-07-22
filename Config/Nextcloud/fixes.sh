@@ -3,7 +3,7 @@
 # Put fixes in a file so they do not need remembered.
 
 docker exec -it nextcloud-app-1 apt update -y
-docker exec -it nextcloud-app-1 apt install -y sudo libmagickcore-6.q16-6-extra
+docker exec -it nextcloud-app-1 apt install -y sudo libmagickcore-6.q16-6-extra htop
 
 # 2022-10-30 More additions after moving to Nextcloud version 25.
 docker exec -itu www-data nextcloud-app-1 ./occ db:add-missing-columns

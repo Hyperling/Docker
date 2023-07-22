@@ -2,11 +2,14 @@
 # This is a revised version of the original work here: 
 #   https://hub.docker.com/_/nextcloud
 
+# Changelog:
+# 2023-07-16 Change from mariadb:10.5 to 10.6.
+
 version: '2'
 
 services:
   db:
-    image: mariadb:10.5
+    image: mariadb:10.6
     restart: always
     command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
     volumes:
