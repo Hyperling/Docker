@@ -1,7 +1,7 @@
 # 2022-10-29 Hyperling
 # Create website in node container and run it.
 
-# Using Debian testing so that we use PHP >8. otherwise the shebangs from
+# Using Debian testing so that we use PHP >8. Otherwise the shebangs from
 # the include files (#!/usr/bin/php) show up on the website.
 FROM debian:testing
 
