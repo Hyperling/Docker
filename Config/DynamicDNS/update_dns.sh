@@ -32,7 +32,7 @@ function usage {
 	   Parameters:
 	      -4 : Update IPV4.
 	      -6 : Update IPV6.
-	         * If neither 4 or 6 are provided, both are assumed as Yes.
+	         * If neither 4 or 6 are provided, 4 is assumed as Yes.
 	      -d : Perform a dry run, echoing the commands rather than doing the update.
 	      -t : Test run. Alias for the dry run option above.
 	      -v : Enable extra output, helpful for debugging.
