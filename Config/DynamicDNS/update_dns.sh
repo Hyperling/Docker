@@ -4,13 +4,15 @@
 
 ## Setup ##
 
-DIR=`dirname $0`
+DIR="`dirname $0`"
 PROG=`basename $0`
 if [[ $DIR == "."* ]]; then
-	DIR=`pwd`
+	DIR="`pwd`"
 fi
-KEYFILE=private.key
+
 DOMAIN="sync.afraid.org"
+KEYFILE_NAME="private.key"
+KEYFILE="$DIR/$KEYFILE_NAME"
 
 ## Functions ##
 
@@ -19,9 +21,9 @@ function usage {
 	exit_status=$1
 	echo "Usage: $PROG [-4] [-6] [-d | -t] [-v] [-h]" 1>&2
 	cat <<- EOF
-	   Program reads the local $KEYFILE and syncs with the Dynamic DNS provider.
+	   Program reads the local $KEYFILE_NAME and syncs with the Dynamic DNS provider.
 
-	   Current DNS providers are mentioned in the README, but initally only 
+	   Current DNS providers are mentioned in the README, but initally only
 	      afraid.org is being supported since that is the maintainer's primary
 	      usage. More may be added eventually or you're welcome to contribute.
 
@@ -53,7 +55,7 @@ function check {
 ## Validations ##
 
 # Ensure the account key is present and has contents.
-if [[ ! -s $DIR/$KEYFILE ]]; then
+if [[ ! -s $KEYFILE ]]; then
 	echo "ERROR: Key file is empty or does not exist, please see README for instructions." 1>&2
 	usage
 fi
@@ -78,7 +80,7 @@ while getopts ":46dtvh" opt; do
 			usage 0
 			;;
 		*)
-			echo "ERROR: Parameter $opt not recognized." 
+			echo "ERROR: Parameter $opt not recognized."
 			usage 1
 			;;
 	esac
@@ -98,8 +100,11 @@ if [[ $dry_run == "Y" ]]; then
 	command="echo $command"
 fi
 
+# Ensure permissions are strict.
+chmod -c 600 $KEYFILE
+
 # Get the user's key
-key=`cat $DIR/$KEYFILE`
+key=`cat $KEYFILE`
 
 # Remove any padding like newlines or trailing spaces
 key=`echo $key`
