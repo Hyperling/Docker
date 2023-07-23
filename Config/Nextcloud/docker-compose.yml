@@ -1,16 +1,19 @@
 # Nextcloud configuration.
-# This is a revised version of the original work here: 
+# This is a revised version of the original work here:
 #   https://hub.docker.com/_/nextcloud
+
+# Changelog:
+# 2023-07-16 Change from mariadb:10.5 to 10.6.
 
 version: '2'
 
 services:
   db:
-    image: mariadb:10.5
+    image: mariadb:10.6
     restart: always
     command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
     volumes:
-      - /opt/Docker/Volumes/Nextcloud/mariadb:/var/lib/mysql
+      - ../../Volumes/Nextcloud/mariadb:/var/lib/mysql
     environment:
       - MYSQL_ROOT_PASSWORD=ChangeMe
       - MYSQL_DATABASE=nextcloud
@@ -25,11 +28,10 @@ services:
     links:
       - db
     volumes:
-      - /opt/Docker/Volumes/Nextcloud/nextcloud:/var/www/html
+      - ../../Volumes/Nextcloud/nextcloud:/var/www/html
     environment:
       - MYSQL_DATABASE=nextcloud
       - MYSQL_USER=nc
       - MYSQL_PASSWORD=changeme
       - MYSQL_HOST=db
       - PHP_UPLOAD_LIMIT=5G
-

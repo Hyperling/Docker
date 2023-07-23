@@ -1,4 +1,4 @@
-# Ignore everything in Volumes, it is large and private data.
+# Ignore everything in Volumes, it contains large and private data.
 Volumes/*
 
 # Ignore backed up config files.
@@ -7,3 +7,15 @@ Volumes/*
 # Ignore logs
 logs/*
 
+# Ignore private reverse proxy configurations.
+Config/ReverseProxy/config/conf.d/*
+Config/ReverseProxy/config/html/*
+Config/ReverseProxy/config/hosts/*
+Config/ReverseProxy/config/load.conf.d/*
+Config/ReverseProxy/config/mail.conf.d/*
+
+# Ignore downloaded mail server files.
+Config/MailServer/setup.sh
+
+# Ignore any private key information.
+private.key
