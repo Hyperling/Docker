@@ -3,7 +3,17 @@
 # Create new container template.
 # usage: create.sh PROJECT_NAME
 
-source /opt/Docker/source.env
+## Setup ##
+
+DIR="`dirname $0`"
+PROG=`basename $0`
+if [[ $DIR == *"."* ]]; then
+  DIR="`pwd`"
+fi
+
+if [[ -z $DOCKER_HOME ]]; then
+  DOCKER_HOME="$DIR/.."
+fi
 
 ## Validation ##
 
@@ -26,10 +36,9 @@ file="$dir/docker-compose.yml"
 
 cd $DOCKER_HOME
 mkdir -pv "$dir"
-[[ ! -f "$file" ]] && echo -e "# Comment.\nservices:\n" >> "$file" || 
+[[ ! -f "$file" ]] && echo -e "# Comment.\nservices:\n" >> "$file" ||
   echo "File already exists, leaving contents alone."
 echo "${file}:"
 cat "$file"
 
 exit 0
-

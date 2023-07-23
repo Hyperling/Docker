@@ -9,4 +9,3 @@ rm -v /etc/apt/sources.list.d/docker.list &&
 rm -rfv /var/lib/docker
 
 exit 0
-

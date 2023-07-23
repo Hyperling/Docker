@@ -4,7 +4,16 @@
 # Original comands came from here: https://docs.docker.com/engine/install/debian/
 # usage: install.sh
 
-## Variables ##
+## Setup ##
+
+DIR="`dirname $0`"
+PROG=`basename $0`
+if [[ $DIR == *"."* ]]; then
+	DIR="`pwd`"
+fi
+if [[ -z $DOCKER_HOME ]]; then
+	DOCKER_HOME="$DIR/.."
+fi
 
 os=`grep ^'NAME=' /etc/os-release`
 pkgmgr=""
