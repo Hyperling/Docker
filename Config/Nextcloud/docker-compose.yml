@@ -1,5 +1,5 @@
 # Nextcloud configuration.
-# This is a revised version of the original work here: 
+# This is a revised version of the original work here:
 #   https://hub.docker.com/_/nextcloud
 
 # Changelog:
@@ -13,7 +13,7 @@ services:
     restart: always
     command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
     volumes:
-      - /opt/Docker/Volumes/Nextcloud/mariadb:/var/lib/mysql
+      - ../../Volumes/Nextcloud/mariadb:/var/lib/mysql
     environment:
       - MYSQL_ROOT_PASSWORD=ChangeMe
       - MYSQL_DATABASE=nextcloud
@@ -28,11 +28,10 @@ services:
     links:
       - db
     volumes:
-      - /opt/Docker/Volumes/Nextcloud/nextcloud:/var/www/html
+      - ../../Volumes/Nextcloud/nextcloud:/var/www/html
     environment:
       - MYSQL_DATABASE=nextcloud
       - MYSQL_USER=nc
       - MYSQL_PASSWORD=changeme
       - MYSQL_HOST=db
       - PHP_UPLOAD_LIMIT=5G
-
