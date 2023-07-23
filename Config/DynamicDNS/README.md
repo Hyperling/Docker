@@ -13,13 +13,14 @@ product's self-built solutions can be found below.
     git clone https://github.com/Hyperling/docker $PROJECT_DIR
     ```
 
-1. Add your Afraid DNS account key to $PROJECT_DIR/Config/DynamicDNS/private.key
-Account key can be found [here](https://freedns.afraid.org/dynamic/v2/).
+1. Add your Afraid DNS account key to $PROJECT_DIR/Config/DynamicDNS/private.key.
+The account key can be found [here](https://freedns.afraid.org/dynamic/v2/).
 
 1. Add this line to the system's cron scheduling using a command like `crontab -e`.
+The sleep waits anywhere from 0 to 55 minutes due to the [Random/10](https://tldp.org/LDP/abs/html/randomvar.html).
 
     ```
-    5 * * * * $PROJECT_DIR/Config/DynamicDNS/update_dns.sh
+    @hourly sleep $(( $RANDOM / 10 )); $PROJECT_DIR/Config/DynamicDNS/update_dns.sh
     ```
 
 ### TESTING
