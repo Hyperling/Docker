@@ -1,18 +1,8 @@
 # Load Balancing Files
-Example is TBD, but would looks something like this:
-
-```
-upstream postgres_servers {
-	server 1.2.3.1:5432;
-	server 1.2.3.2:5432;
-	server 1.2.3.3:5432;
-	server 1.2.3.4:5432;
-}
-server {
-	listen 5432;
-	proxy_pass postgres_servers;
-}
-```
+Allow requests coming to this server to be spread amongst multiple servers based
+on port number. It does not seem possible to spread them based on `server_name`
+or other directives like a reverse proxy. The server simply listens on the port
+then runs through the upstream list to determine the destination.
 
 ## Official Documentation
 http://nginx.org/en/docs/stream/ngx_stream_core_module.html
