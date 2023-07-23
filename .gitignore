@@ -19,3 +19,6 @@ Config/MailServer/setup.sh
 
 # Ignore any private key information.
 private.key
+
+# Ignore secrets for Invidious.
+Config/Invidious/*.env
