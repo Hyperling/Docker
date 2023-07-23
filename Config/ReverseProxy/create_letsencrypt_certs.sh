@@ -48,7 +48,7 @@ fi
 ## Main ##
 
 # Loop over the proxy configuration files and ensure they have certs.
-ls $DIR/config/conf.d/*.* | while read file; do
+grep -l proxy_pass $DIR/config/conf.d/*.* | while read file; do
 	filename=`basename $file`
 
 	if [[ $filename == *"example.com"* ]]; then
