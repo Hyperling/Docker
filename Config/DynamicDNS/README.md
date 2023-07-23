@@ -13,11 +13,12 @@ product's self-built solutions can be found below.
     git clone https://github.com/Hyperling/docker $PROJECT_DIR
     ```
 
-1. Add your Afraid DNS account key to $PROJECT_DIR/Config/DynamicDNS/private.key.
-The account key can be found [here](https://freedns.afraid.org/dynamic/v2/).
+1. Add your user key to `$PROJECT_DIR/Config/DynamicDNS/private.key`. The key can
+be found on [this page](https://freedns.afraid.org/dynamic/v2/) after signing in.
 
 1. Add this line to the system's cron scheduling using a command like `crontab -e`.
-The sleep waits anywhere from 0 to 55 minutes due to the [Random/10](https://tldp.org/LDP/abs/html/randomvar.html).
+The sleep waits anywhere from 0 to 55 minutes due to the
+[Random/10](https://tldp.org/LDP/abs/html/randomvar.html).
 
     ```
     @hourly sleep $(( $RANDOM / 10 )); $PROJECT_DIR/Config/DynamicDNS/update_dns.sh
@@ -62,6 +63,6 @@ and preferably add a 30-45 second sleep so that you do not hit near :00 seconds.
 
 ### No-IP.org Instructions
 
-Please see this guide on installing the Dynamic Update Client (DUC).
+Please see the official guide on installing the Dynamic Update Client (DUC).
 
 https://my.noip.com/dynamic-dns/duc
