@@ -14,6 +14,8 @@ Config/ReverseProxy/config/hosts/*
 Config/ReverseProxy/config/load.conf.d/*
 Config/ReverseProxy/config/mail.conf.d/*
 
-# Ignore MailServer Files
+# Ignore downloaded mail server files
 Config/MailServer/setup.sh
 
+# Ignore any private key information
+private.key
