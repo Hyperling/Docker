@@ -22,7 +22,7 @@ Install the project dependencies.
 apt install git bash
 ```
 
-Clone the project.
+Clone the project. You may choose anywhere, but `/opt/Docker` is recommended.
 ```
 git clone https://github.com/hyperling/docker /opt/Docker
 ```
