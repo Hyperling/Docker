@@ -11,6 +11,8 @@ if [[ $DIR == "."* ]]; then
 fi
 
 DOMAIN="sync.afraid.org"
+PROTOCOL="http"
+
 KEYFILE_NAME="private.key"
 KEYFILE="$DIR/$KEYFILE_NAME"
 
@@ -56,7 +58,8 @@ function check {
 
 # Ensure the account key is present and has contents.
 if [[ ! -s $KEYFILE ]]; then
-	echo "ERROR: Key file is empty or does not exist, please see README for instructions." 1>&2
+	echo "ERROR: Key file '$KEYFILE' is empty or does not exist." 1>&2
+	echo -e "Please see '$DIR/README.md' for instructions.\n"
 	usage
 fi
 
@@ -86,10 +89,15 @@ while getopts ":46dtvh" opt; do
 	esac
 done
 
-# If neither parameter was passed, assume both are wanted.
+# Cannot set both 4 and 6, otherwise only the 2nd takes effect.
+if [[ -n $v4 && -n $v6 ]]; then
+	echo "ERROR: Cannot set both v4 and v6, please only choose one." 1>&2
+	usage 1
+fi
+
+# If neither parameter was passed, assume 4 is wanted.
 if [[ -z $v4 && -z $v6 ]]; then
 	v4="Y"
-	v6="Y"
 fi
 
 ## Main ##
@@ -104,20 +112,25 @@ fi
 chmod -c 600 $KEYFILE
 
 # Get the user's key
-key=`cat $KEYFILE`
+if [[ -n $KEYFILE ]]; then
+	key=`cat $KEYFILE`
+else
+	echo "ERROR: Cannot find '$KEYFILE'. Please set up your account key." 1>&2
+	usage 1
+fi
 
 # Remove any padding like newlines or trailing spaces
 key=`echo $key`
 
 # Ensure we got a value
 if [[ -z $key ]]; then
-	echo "ERROR: Key file not empty but key could not be found." 1>&2
+	echo "ERROR: Key contents were not read, is '$KEYFILE' set up proerly?." 1>&2
 	usage 1
 fi
 
 # Try to ensure the key is not going to cause a malformed link somehow.
 if [[ $key == *" "* ]]; then
-	echo "WARNING: Space character found in key. Is that right? Converting to %20." 1>&2
+	echo "WARNING: Space character found in key. Is that correct? Converting to %20." 1>&2
 	key=${key// /%20}
 fi
 
@@ -125,12 +138,12 @@ uri="$DOMAIN/u/$key/"
 
 # Connect with the provider.
 if [[ $v4 == "Y" ]]; then
-	$command https://$uri
+	$command $PROTOCOL://$uri
 	check $? Y
 fi
 if [[ $v6 == "Y" ]]; then
-	$command https://v6.$uri
-	check $? N
+	$command $PROTOCOL://v6.$uri
+	check $? Y
 fi
 
-exit
+exit 0
