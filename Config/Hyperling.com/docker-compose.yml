@@ -8,5 +8,5 @@ services:
     image: node
     restart: always
     build: ./
-    ports: 
+    ports:
       - 8317:8080

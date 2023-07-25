@@ -10,7 +10,7 @@ services:
 
   invidious:
     image: quay.io/invidious/invidious:latest
-    restart: unless-stopped
+    restart: always
     ports:
       - "8300:3000"
     env_file:
@@ -46,7 +46,7 @@ services:
 
   invidious-db:
     image: docker.io/library/postgres:14
-    restart: unless-stopped
+    restart: always
     volumes:
       - ../../Volumes/Invidious/postgres/data:/var/lib/postgresql/data
       - ../../Volumes/Invidious/postgres/config/sql:/config/sql
