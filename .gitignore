@@ -2,7 +2,9 @@
 Volumes/*
 
 # Ignore backed up config files.
-*.yml.*
+*.yml.*backup*
+*.yml.*Backup*
+*.yml.*BACKUP*
 
 # Ignore logs
 logs/*
@@ -19,3 +21,6 @@ Config/MailServer/setup.sh
 
 # Ignore any private key information.
 private.key
+
+# Ignore secrets for Invidious.
+Config/Invidious/*.env
