@@ -6,15 +6,16 @@
 
 FROM debian
 
+# Remove Existing Config
+RUN rm -rfv /etc/{hosts,resolv.conf,dnsmasq.conf}
+
 # Install Dependencies
 RUN apt update && apt install -y dnsmasq
 
-# Remove Existing Config
-RUN systemctl stop dnsmasq
-RUN rm -rfv /etc/{hosts,resolv.conf,dnsmasq.conf}
-
 # Copy Configuration Files
-COPY ./config/{hosts,resolv.conf,dnsmasq.conf} /etc/
+COPY ./config/hosts        /etc/
+COPY ./config/resolv.conf  /etc/
+COPY ./config/dnsmasq.conf /etc/
 
-# Start Container
-CMD systemctl restart dnsmasq
+## Reload Service
+RUN service dnsmasq restart
