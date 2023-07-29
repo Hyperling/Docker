@@ -1,0 +1,13 @@
+# 2023-07-29
+# Local DNS server which properly handles DNS splitting.
+# Necessary when using junk ISP gateways and running a domain.
+# https://wiki.debian.org/dnsmasq
+
+version: '3'
+
+services:
+  app:
+    restart: always
+    build: ./
+    ports:
+      - 8317:8080
