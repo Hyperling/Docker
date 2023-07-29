@@ -24,3 +24,6 @@ private.key
 
 # Ignore secrets for Invidious.
 Config/Invidious/*.env
+
+# Ignore DNS config files, contain private settings.
+Config/DNS/config/*

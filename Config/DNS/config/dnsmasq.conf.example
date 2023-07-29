@@ -1,0 +1,31 @@
+# 2023-07-29
+#
+# Description:
+#   Settings specific to DNS Masquerade. The parameters in this file are the
+#   same which can be passed to the dnsmasq program directly using '--', but the
+#   '--' is not necessary in this file. Otherwise this file has no manpage.
+#
+# Futher Reading:
+#   Commands:
+#     https://manpages.debian.org/bookworm/dnsmasq-base/dnsmasq.8.en.html
+#   Tutorials:
+#     Basic:
+#       https://www.howtoforge.com/how-to-setup-local-dns-server-using-dnsmasq-on-ubuntu-20-04/
+#     Split DNS:
+#       https://www.gluster.org/use-dnsmasq-for-separating-dns-queries/
+
+# Who this server is.
+port=53
+domain=example.com
+
+# FQDN must be provided in order for this server to check upstream for it.
+domain-needed
+
+# Do not forward requests for private IPs to upstream domains.
+bogus-priv
+
+# Automatically add FQDN to any simple names in /etc/hosts.
+#expand-hosts
+
+# Default cache size is 150. 0 disables caching. Large values lower performance.
+cache-size=1000

@@ -1,0 +1,21 @@
+# 2023-07-29
+#
+# Description:
+#   Generic DNS settings unrelated to dnsmasq are provided here.
+#
+# Futher Reading:
+#   https://manpages.debian.org/bookworm/manpages/resolv.conf.5.en.html
+#
+
+# The local domains being hosted.
+search example.com anotherdomain.com
+
+# Explicitly set local caching with /etc/hosts on.
+nameserver 127.0.0.1
+
+# Add any extra settings.
+options rotate
+
+# Use Cloudflare for upstream DNS.
+nameserver 1.1.1.1
+nameserver 1.0.0.1

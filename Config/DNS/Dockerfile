@@ -1,9 +1,10 @@
 # 2023-07-29
-# Create website in node container and run it.
+#
+# Create a Debian container which runs dnsmasq.
+# https://wiki.debian.org/dnsmasq
+#
 
-# Using Debian testing so that we use PHP >8. Otherwise the shebangs from
-# the include files (#!/usr/bin/php) show up on the website.
-FROM debian:testing
+FROM debian
 
 # Install Dependencies
 RUN apt update && apt install -y dnsmasq
