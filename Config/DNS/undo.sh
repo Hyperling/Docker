@@ -1,3 +1,5 @@
+#!/bin/bash
+#
 # 2023-07-29
 # Config/DNS/undo.sh
 # Easy way to stop using this container.
@@ -16,7 +18,7 @@ function start-service {
 	fi
 	systemctl enable --now $service &&
 		echo "$service started successfully!" ||
-		echo "$service was not found, no problem."
+		echo "* If $service was not found then there is no problem."
 }
 
 echo -e "\n*** Stop the docker container ***"

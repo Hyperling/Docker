@@ -10,11 +10,11 @@
 # The local domains being hosted.
 search example.com anotherdomain.com
 
-# Explicitly set local caching with /etc/hosts on.
+# Explicitly set local caching with hosts file on.
 nameserver 127.0.0.1
 
 # Add any extra settings.
-options rotate
+#options rotate
 
 # Use Cloudflare for upstream DNS.
 nameserver 1.1.1.1

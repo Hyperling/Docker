@@ -10,14 +10,7 @@ version: '3'
 services:
   app:
     build: ./
-    restart: on-failure
+    restart: always
     ports:
-      - "53:53"
-    command: |
-      /bin/sh -c '
-        while :
-        do
-          sleep 8h & wait $${!}
-          service dnsmasq restart
-        done
-      '
+      - "53:53/udp"
+      - "53:53/tcp"

@@ -1,3 +1,5 @@
+#!/bin/bash
+#
 # 2023-07-29
 # Config/DNS/run.sh
 # Fix common issues when trying to run this container.
@@ -16,7 +18,7 @@ function stop-service {
 	fi
 	systemctl disable --now $service &&
 		echo "$service stopped successfully!" ||
-		echo "$service was not found, no problem."
+		echo "* If $service was not found then there is no problem."
 }
 
 echo -e "\n*** Turn off any local DNS programs ***"
