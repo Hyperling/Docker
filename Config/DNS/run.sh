@@ -9,17 +9,28 @@ function stop-service {
 	if [[ -n $1 ]]; then
 		service=$1
 	else
-		echo "ERROR: A parameter was not provided for stop-service, aborting."
+		echo "ERROR: A parameter was not provided for stop-service, aborting." >&2
 		exit 1
 	fi
 	if [[ -n $2 ]]; then
-		echo "ERROR: A second parameter to stop-service is not expected, aborting."
+		echo "ERROR: A second parameter to stop-service is not expected, aborting." >&2
 		exit 1
 	fi
 	systemctl disable --now $service &&
 		echo "$service stopped successfully!" ||
 		echo "* If $service was not found then there is no problem."
 }
+
+## Validations ##
+
+# Ensure the necessary config files have been created.
+if [[ ! -s ./config/hosts
+	|| ! -s ./config/resolv.conf
+	|| ! -s ./config/dnsmasq.conf
+]]; then
+	echo "ERROR: Please ensure all 3 files have been created in the config folder." >&2
+	exit 1
+fi
 
 echo -e "\n*** Turn off any local DNS programs ***"
 # These programs use port 53 but this container needs to be able to listen on it.
