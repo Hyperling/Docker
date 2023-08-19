@@ -29,4 +29,4 @@ Config/Invidious/*.env
 Config/DNS/config/*
 
 # Ignore anything in disabled folders.
-*/disabled/*
+disabled/*
