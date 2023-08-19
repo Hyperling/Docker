@@ -1,0 +1,10 @@
+# 2023-07-11 Hyperling
+# Seeing if port forwarding allows listen and server_name directives and allows mail reverse proxy without auth server.
+
+server {
+    listen 25;
+    server_name mail.thesovereign.one;
+
+    proxy_pass thesovereign-smtp;
+}
+

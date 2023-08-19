@@ -27,3 +27,6 @@ Config/Invidious/*.env
 
 # Ignore DNS config files, contain private settings.
 Config/DNS/config/*
+
+# Ignore anything in disabled folders.
+*/disabled/*
