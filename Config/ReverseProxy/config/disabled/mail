@@ -1,8 +1,0 @@
-
-server {
-    listen 25;
-
-    if ($host = mail.thesovereign.one) {
-        proxy_pass thesovereign-mail;
-    }
-}
