@@ -28,8 +28,8 @@ if [[ $certbot_running != 1 ]]; then
 fi
 
 ## Input ##
-
 # Gather information from the user.
+
 echo -n "Please provide the email address you would like the certs bound to: "
 read email
 if [[ -z $email ]]; then
@@ -45,19 +45,34 @@ if [[ $confirm != "Y"* ]]; then
 	exit 0
 fi
 
+echo -n "Is this a test run? [Y/n]: "
+typeset -l test dry_run
+read test
+if [[ $test == "y"* || -z $test ]]; then
+	dry_run="--dry-run"
+	echo "   Great! Running with $dry_run to avoid using up requests."
+else
+	echo "   Requesting live certificates for new domains."
+fi
+
 ## Main ##
 
 # Loop over the proxy configuration files and ensure they have certs.
 grep -l proxy_pass $DIR/config/conf.d/*.* | while read file; do
 	filename=`basename $file`
+	echo -e "\n"
 
 	if [[ $filename == *"example.com"* ]]; then
 		echo "Skipping $filename since it is only an example."
 		continue
 	fi
 
-	echo "*** Checking $filename ***"
-	if [[ -d $CERT_DIR/$filename ]]; then
+	echo  "*** Checking $filename ***"
+   if [[ -f $CERT_DIR/$filename/SELF ]]; then
+      echo "Removing self-signed certs."
+      rm -rfv $CERT_DIR/$filename
+   fi
+	if [[ ! -d $CERT_DIR/$filename ]]; then
 		echo "Getting the domains which need the cert."
 		domains=`grep -v '$server_name' $file | grep server_name`
 
@@ -69,13 +84,18 @@ grep -l proxy_pass $DIR/config/conf.d/*.* | while read file; do
 		domains=${domains// /,}
 		echo "Domains='$domains'"
 
-		echo "Attempting to create real certs at $CERT_DIR/$filename."
-		docker exec reverseproxy-certbot-1 certbot certonly -n --webroot \
+		echo "Attempting to create certs at $CERT_DIR/$filename."
+		docker exec reverseproxy-certbot-1  \
+				certbot certonly -n --webroot $dry_run \
 				-w /etc/letsencrypt --agree-tos -m $email -d $filename
 
-		ls -lh $CERT_DIR/$filename/*
+		if [[ -z $dry_run ]]; then
+			docker exec reverseproxy-certbot-1 \
+					sh -c "cp -rL /etc/letsencrypt/live/$filename /etc/letsencrypt/nginx/"
+			ls -lh $CERT_DIR/$filename/*
+		fi
 	else
-		echo "Website's certificate folder does not exist, skipping."
+		echo "Website's certificate folder already exists, skipping."
 		continue
 	fi
 done
