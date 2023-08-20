@@ -6,7 +6,7 @@
 # 2023-07-16 Change from mariadb:10.5 to 10.6.
 # 2023-08-20 Add Redis. (https://markontech.com/docker/setup-nextcloud-with-redis-using-docker/)
 
-version: '2'
+version: '3'
 
 services:
   db:
