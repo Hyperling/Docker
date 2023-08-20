@@ -4,6 +4,7 @@
 
 # Changelog:
 # 2023-07-16 Change from mariadb:10.5 to 10.6.
+# 2023-08-20 Add Redis. (https://markontech.com/docker/setup-nextcloud-with-redis-using-docker/)
 
 version: '2'
 
@@ -20,6 +21,11 @@ services:
       - MYSQL_USER=nc
       - MYSQL_PASSWORD=changeme
 
+  redis:
+    image: redis
+    restart: always
+    command: redis-server --requirepass someredispassword
+
   app:
     image: nextcloud
     restart: always
@@ -27,6 +33,7 @@ services:
       - 8080:80
     links:
       - db
+      - redis
     volumes:
       - ../../Volumes/Nextcloud/nextcloud:/var/www/html
     environment:
@@ -35,3 +42,4 @@ services:
       - MYSQL_PASSWORD=changeme
       - MYSQL_HOST=db
       - PHP_UPLOAD_LIMIT=5G
+      - REDIS_HOST_PASSWORD=someredispassword
