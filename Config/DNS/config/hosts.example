@@ -16,5 +16,10 @@
 127.0.1.1 dns.example.com dns
 
 192.168.1.22 ssh.example.com  ssh
+
 192.168.1.25 mail.example.com mail
-192.168.1.80 www.example.com  www
+192.168.1.25 imap.example.com
+192.168.1.25 smtp.example.com
+
+192.168.1.80 www.example.com example.com
+192.168.1.80 www.example.net example.net
