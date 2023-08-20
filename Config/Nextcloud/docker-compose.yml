@@ -42,4 +42,5 @@ services:
       - MYSQL_PASSWORD=changeme
       - MYSQL_HOST=db
       - PHP_UPLOAD_LIMIT=5G
+      - REDIS_HOST=redis
       - REDIS_HOST_PASSWORD=someredispassword
