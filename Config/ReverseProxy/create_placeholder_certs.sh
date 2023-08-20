@@ -25,7 +25,7 @@ ls $DIR/config/conf.d/*.* | while read file; do
 	if [[ ! -d $CERT_DIR/$filename ]]; then
 		echo "Creating self-signed certs at $CERT_DIR/$filename."
 		mkdir -pv $CERT_DIR/$filename
-      touch $CERT_DIR/$filename/SELF
+		touch $CERT_DIR/$filename/SELF
 		openssl req -new -x509 -days 3 -nodes \
 				-out $CERT_DIR/$filename/fullchain.pem \
 				-keyout $CERT_DIR/$filename/privkey.pem \

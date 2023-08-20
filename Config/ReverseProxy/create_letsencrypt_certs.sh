@@ -68,10 +68,10 @@ grep -l proxy_pass $DIR/config/conf.d/*.* | while read file; do
 	fi
 
 	echo  "*** Checking $filename ***"
-   if [[ -f $CERT_DIR/$filename/SELF ]]; then
-      echo "Removing self-signed certs."
-      rm -rfv $CERT_DIR/$filename
-   fi
+	if [[ -f $CERT_DIR/$filename/SELF ]]; then
+		echo "Removing self-signed certs."
+		rm -rfv $CERT_DIR/$filename
+	fi
 	if [[ ! -d $CERT_DIR/$filename ]]; then
 		echo "Getting the domains which need the cert."
 		domains=`grep -v '$server_name' $file | grep server_name`
