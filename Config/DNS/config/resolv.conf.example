@@ -8,7 +8,7 @@
 #
 
 # The local domains being hosted.
-search example.com anotherdomain.com
+search example.com example.net anotherdomain.com
 
 # Explicitly set local caching with hosts file on.
 nameserver 127.0.0.1
