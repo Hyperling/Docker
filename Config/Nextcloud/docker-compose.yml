@@ -4,12 +4,14 @@
 
 # Changelog:
 # 2023-07-16 Change from mariadb:10.5 to 10.6.
+# 2023-07-25 Add Onlyoffice. (https://github.com/ONLYOFFICE/docker-onlyoffice-nextcloud)
 # 2023-08-20 Add Redis. (https://markontech.com/docker/setup-nextcloud-with-redis-using-docker/)
 
 version: '3'
 
 services:
   db:
+    container_name: nextcloud-db
     image: mariadb:10.6
     restart: always
     command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
@@ -21,18 +23,29 @@ services:
       - MYSQL_USER=nc
       - MYSQL_PASSWORD=changeme
 
+  oo:
+    container_name: nextcloud-oo
+    image: onlyoffice/documentserver
+    restart: always
+    ports:
+      - 8000:80
+      - 4443:443
+
   redis:
+    container_name: nextcloud-redis
     image: redis
     restart: always
     command: redis-server --requirepass someredispassword
 
   app:
+    container_name: nextcloud-app
     image: nextcloud
     restart: always
     ports:
       - 8080:80
     links:
       - db
+      - oo
       - redis
     volumes:
       - ../../Volumes/Nextcloud/nextcloud:/var/www/html
