@@ -21,16 +21,12 @@ services:
       - MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD
       - MYSQL_USER=$MYSQL_USER
       - MYSQL_PASSWORD=$MYSQL_PASSWORD
-    networks:
-      hostnet: {}
 
   redis:
     container_name: nc-redis
     image: redis
     restart: always
     command: redis-server --requirepass $REDIS_HOST_PASSWORD
-    networks:
-      hostnet: {}
 
   app:
     container_name: nc-app
@@ -53,10 +49,3 @@ services:
       - REDIS_HOST_PASSWORD=$REDIS_HOST_PASSWORD
     #dns:
     #  - $DNS
-    networks:
-      hostnet: {}
-
-networks:
-  hostnet:
-    external: true
-    name: host

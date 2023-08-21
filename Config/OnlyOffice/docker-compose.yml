@@ -15,10 +15,3 @@ services:
       - JWT_SECRET=$JWT_SECRET
     #dns:
     #  - $DNS
-    networks:
-      hostnet: {}
-
-networks:
-  hostnet:
-    external: true
-    name: host
