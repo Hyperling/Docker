@@ -47,5 +47,5 @@ services:
       - PHP_UPLOAD_LIMIT=$PHP_UPLOAD_LIMIT
       - REDIS_HOST=$REDIS_HOST
       - REDIS_HOST_PASSWORD=$REDIS_HOST_PASSWORD
-    dns:
-      - $DNS
+    #dns:
+    #  - $DNS
