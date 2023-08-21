@@ -9,6 +9,7 @@ version: '3'
 
 services:
   app:
+    container_name: dns-app
     build: ./
     restart: always
     ports:

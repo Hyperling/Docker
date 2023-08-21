@@ -6,7 +6,8 @@
 version: "3"
 
 services:
-  invidious:
+  app:
+    container_name: invidious-app
     image: quay.io/invidious/invidious:latest
     restart: always
     ports:
@@ -42,7 +43,8 @@ services:
     depends_on:
       - invidious-db
 
-  invidious-db:
+  db:
+    container_name: invidious-db
     image: docker.io/library/postgres:14
     restart: always
     volumes:

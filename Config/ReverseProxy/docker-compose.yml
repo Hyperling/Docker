@@ -10,6 +10,7 @@ version: '3'
 services:
 
   app:
+    container_name: rp-app
     build: ./
     restart: always
     ports:
@@ -21,6 +22,7 @@ services:
     command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
 
   certbot:
+    container_name: rp-certbot
     image: certbot/certbot
     restart: always
     volumes:
