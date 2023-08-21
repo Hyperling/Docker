@@ -27,11 +27,4 @@ docker exec -itu www-data nc-app ./occ maintenance:repair
 docker exec -itu www-data nc-app ./occ versions:cleanup
 docker exec -itu www-data nc-app ./occ files:cleanup
 
-# Still in testing.
-#### 2023-08-20 For OnlyOffice based on:
-####    https://github.com/ONLYOFFICE/docker-onlyoffice-nextcloud/blob/master/set_configuration.sh
-###docker exec -u www-data nc-app php occ --no-warnings app:install onlyoffice
-###docker exec -u www-data nc-app php occ --no-warnings config:system:set onlyoffice DocumentServerInternalUrl --value="http://nc-oo/"
-###docker exec -u www-data nc-app php occ --no-warnings config:system:set onlyoffice StorageUrl --value="http://nc-app/"
-
 exit 0
