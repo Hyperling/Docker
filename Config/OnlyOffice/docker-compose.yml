@@ -13,5 +13,3 @@ services:
       - 4443:443
     environment:
       - JWT_SECRET=$JWT_SECRET
-    #dns:
-    #  - $DNS

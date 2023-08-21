@@ -5,6 +5,12 @@
 # Changelog:
 # 2023-07-16 Change from mariadb:10.5 to 10.6.
 # 2023-08-20 Add Redis. (https://markontech.com/docker/setup-nextcloud-with-redis-using-docker/)
+# 2023-08-21 Got NC to work with OO after specifying the Advanced parameters!
+#              OO Address: https://FQDN-For-Reverse-Proxied-OO-Server
+#              OO Secret: Contents-Of-$JWT_SECRET
+#              OO Header:
+#              OO Internal Address: http://docker-server-ip:8000
+#              NC Internal Address: http://docker-server-ip:8080
 
 version: '3'
 
@@ -47,5 +53,3 @@ services:
       - PHP_UPLOAD_LIMIT=$PHP_UPLOAD_LIMIT
       - REDIS_HOST=$REDIS_HOST
       - REDIS_HOST_PASSWORD=$REDIS_HOST_PASSWORD
-    #dns:
-    #  - $DNS
