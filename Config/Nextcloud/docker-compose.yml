@@ -40,10 +40,10 @@ services:
     volumes:
       - ../../Volumes/Nextcloud/nextcloud:/var/www/html
     environment:
+      - MYSQL_HOST=$MYSQL_HOST
       - MYSQL_DATABASE=$MYSQL_DATABASE
       - MYSQL_USER=$MYSQL_USER
       - MYSQL_PASSWORD=$MYSQL_PASSWORD
-      - MYSQL_HOST=$MYSQL_HOST
       - PHP_UPLOAD_LIMIT=$PHP_UPLOAD_LIMIT
       - REDIS_HOST=$REDIS_HOST
       - REDIS_HOST_PASSWORD=$REDIS_HOST_PASSWORD
