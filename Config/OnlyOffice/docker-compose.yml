@@ -11,10 +11,5 @@ services:
     ports:
       - 8000:80
       - 4443:443
-    environment:
-      - JWT_SECRET=abc123
-    env_file:
-      - ../../dns.env
     dns:
-      - $DNS1
-      - $DNS2
+      - "$DNS"
