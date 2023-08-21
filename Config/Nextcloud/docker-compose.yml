@@ -4,34 +4,48 @@
 
 # Changelog:
 # 2023-07-16 Change from mariadb:10.5 to 10.6.
+# 2023-08-20 Add Redis. (https://markontech.com/docker/setup-nextcloud-with-redis-using-docker/)
 
-version: '2'
+version: '3'
 
 services:
   db:
+    container_name: nc-db
     image: mariadb:10.6
     restart: always
     command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
     volumes:
       - ../../Volumes/Nextcloud/mariadb:/var/lib/mysql
     environment:
-      - MYSQL_ROOT_PASSWORD=ChangeMe
-      - MYSQL_DATABASE=nextcloud
-      - MYSQL_USER=nc
-      - MYSQL_PASSWORD=changeme
+      - MYSQL_DATABASE=$MYSQL_DATABASE
+      - MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD
+      - MYSQL_USER=$MYSQL_USER
+      - MYSQL_PASSWORD=$MYSQL_PASSWORD
+
+  redis:
+    container_name: nc-redis
+    image: redis
+    restart: always
+    command: redis-server --requirepass $REDIS_HOST_PASSWORD
 
   app:
+    container_name: nc-app
     image: nextcloud
     restart: always
     ports:
       - 8080:80
     links:
       - db
+      - redis
     volumes:
       - ../../Volumes/Nextcloud/nextcloud:/var/www/html
     environment:
-      - MYSQL_DATABASE=nextcloud
-      - MYSQL_USER=nc
-      - MYSQL_PASSWORD=changeme
-      - MYSQL_HOST=db
-      - PHP_UPLOAD_LIMIT=5G
+      - MYSQL_HOST=$MYSQL_HOST
+      - MYSQL_DATABASE=$MYSQL_DATABASE
+      - MYSQL_USER=$MYSQL_USER
+      - MYSQL_PASSWORD=$MYSQL_PASSWORD
+      - PHP_UPLOAD_LIMIT=$PHP_UPLOAD_LIMIT
+      - REDIS_HOST=$REDIS_HOST
+      - REDIS_HOST_PASSWORD=$REDIS_HOST_PASSWORD
+    #dns:
+    #  - $DNS

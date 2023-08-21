@@ -1,0 +1,25 @@
+# 2023-07-29
+#
+# Description:
+#   Example file of how to use the hosts file. It contains local servers running
+#   inside the domain that need accessed directly rather than traversing outside
+#   the WAN. This saves time and prevents some routers from dropping data.
+#
+# Format:
+#   XXX.XXX.XXX.XXX subdomain.domain.extension subdomain
+#
+# Futher Reading:
+#   https://manpages.debian.org/bookworm/manpages/hosts.5.en.html
+#
+
+127.0.0.1 localhost
+127.0.1.1 dns.example.com dns
+
+192.168.1.22 ssh.example.com  ssh
+
+192.168.1.25 mail.example.com mail
+192.168.1.25 imap.example.com
+192.168.1.25 smtp.example.com
+
+192.168.1.80 www.example.com example.com
+192.168.1.80 www.example.net example.net

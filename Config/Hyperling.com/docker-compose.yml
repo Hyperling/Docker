@@ -5,8 +5,8 @@ version: '2'
 
 services:
   app:
-    image: node
-    restart: always
+    container_name: website-app
     build: ./
+    restart: always
     ports:
       - 8317:8080

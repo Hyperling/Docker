@@ -1,14 +1,13 @@
+# 2023-07-25
 # Invidious configuration.
 # This is a revised version of the original work here:
 #   https://hub.docker.com/_/nextcloud
 
-# Changelog:
-# 2023-07-16 Change from mariadb:10.5 to 10.6.
-
 version: "3"
-services:
 
-  invidious:
+services:
+  app:
+    container_name: invidious-app
     image: quay.io/invidious/invidious:latest
     restart: always
     ports:
@@ -22,8 +21,8 @@ services:
       INVIDIOUS_CONFIG: |
         db:
           dbname: invidious
-          user:
-          password:
+          user: ${INV_DB_USER}
+          password: ${INV_DB_PASS}
           host: invidious-db
           port: 5432
         check_tables: true
@@ -31,7 +30,7 @@ services:
         domain:
         # https_only: false
         # statistics_enabled: false
-        hmac_key:
+        hmac_key: "${INV_HMAC_KEY}"
     healthcheck:
       test: wget -nv --tries=1 --spider http://127.0.0.1:3000/api/v1/comments/jNQXAC9IVRw || exit 1
       interval: 30s
@@ -44,7 +43,8 @@ services:
     depends_on:
       - invidious-db
 
-  invidious-db:
+  db:
+    container_name: invidious-db
     image: docker.io/library/postgres:14
     restart: always
     volumes:
@@ -52,10 +52,10 @@ services:
       - ../../Volumes/Invidious/postgres/config/sql:/config/sql
       - ../../Volumes/Invidious/postgres/init-invidious-db.sh:/docker-entrypoint-initdb.d/init-invidious-db.sh
     env_file:
-      - ./pg.env
+      - ./inv.env
     environment:
       POSTGRES_DB: invidious
-      POSTGRES_USER:
-      POSTGRES_PASSWORD:
+      POSTGRES_USER: "${INV_DB_USER}"
+      POSTGRES_PASSWORD: "${INV_DB_PASS}"
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]

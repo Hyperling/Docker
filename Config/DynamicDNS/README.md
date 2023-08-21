@@ -21,7 +21,7 @@ The sleep waits anywhere from 0 to 55 minutes due to the
 [Random/10](https://tldp.org/LDP/abs/html/randomvar.html).
 
     ```
-    @hourly sleep $(( $RANDOM / 10 )); $PROJECT_DIR/Config/DynamicDNS/update_dns.sh
+    @hourly bash -c 'sleep $(( $RANDOM / 10 )); $PROJECT_DIR/Config/DynamicDNS/update_dns.sh'
     ```
 
 ### TESTING

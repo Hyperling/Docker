@@ -7,7 +7,7 @@ Volumes/*
 *.yml.*BACKUP*
 
 # Ignore logs
-logs/*
+logs
 
 # Ignore private reverse proxy configurations.
 Config/ReverseProxy/config/conf.d/*
@@ -24,3 +24,12 @@ private.key
 
 # Ignore secrets for Invidious.
 Config/Invidious/*.env
+
+# Ignore DNS config files, contain private settings.
+Config/DNS/config/*
+
+# Ignore anything in disabled folders.
+disabled
+
+# Ignore any .env files which are not explicitly committed to the project.
+*.env
