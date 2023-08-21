@@ -30,3 +30,6 @@ Config/DNS/config/*
 
 # Ignore anything in disabled folders.
 disabled
+
+# Ignore any .env files which are not explicitly committed to the project.
+*.env
