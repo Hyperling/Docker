@@ -11,7 +11,7 @@ version: '3'
 
 services:
   db:
-    container_name: nextcloud-db
+    container_name: nc-db
     image: mariadb:10.6
     restart: always
     command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
@@ -24,7 +24,7 @@ services:
       - MYSQL_PASSWORD=changeme
 
   oo:
-    container_name: nextcloud-oo
+    container_name: nc-oo
     image: onlyoffice/documentserver
     restart: always
     ports:
@@ -32,13 +32,13 @@ services:
       - 4443:443
 
   redis:
-    container_name: nextcloud-redis
+    container_name: nc-redis
     image: redis
     restart: always
     command: redis-server --requirepass someredispassword
 
   app:
-    container_name: nextcloud-app
+    container_name: nc-app
     image: nextcloud
     restart: always
     ports:
