@@ -16,6 +16,11 @@ services:
     command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
     volumes:
       - ../../Volumes/Nextcloud/mariadb:/var/lib/mysql
+    environment:
+      - MYSQL_DATABASE=$MYSQL_DATABASE
+      - MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD
+      - MYSQL_USER=$MYSQL_USER
+      - MYSQL_PASSWORD=$MYSQL_PASSWORD
 
   redis:
     container_name: nc-redis
@@ -34,5 +39,13 @@ services:
       - redis
     volumes:
       - ../../Volumes/Nextcloud/nextcloud:/var/www/html
+    environment:
+      - MYSQL_DATABASE=$MYSQL_DATABASE
+      - MYSQL_USER=$MYSQL_USER
+      - MYSQL_PASSWORD=$MYSQL_PASSWORD
+      - MYSQL_HOST=$MYSQL_HOST
+      - PHP_UPLOAD_LIMIT=$PHP_UPLOAD_LIMIT
+      - REDIS_HOST=$REDIS_HOST
+      - REDIS_HOST_PASSWORD=$REDIS_HOST_PASSWORD
     dns:
-      - "$DNS"
+      - $DNS

@@ -11,5 +11,7 @@ services:
     ports:
       - 8000:80
       - 4443:443
+    environment:
+      - JWS_SECRET=$JWS_SECRET
     dns:
-      - "$DNS"
+      - $DNS
