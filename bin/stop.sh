@@ -16,9 +16,12 @@ fi
 
 ## Main ##
 
+echo "Stopping all containers."
+
 cd $DOCKER_HOME/Config
 for dir in `ls`; do
 	[ -d $dir ] && cd $dir || continue
+	echo ""
 	pwd
 	[ -e docker-compose.yml ] && docker compose down
 	cd ..
