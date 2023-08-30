@@ -6,7 +6,6 @@
 # -l for logs.
 # -c for clean.
 # Delete the scripts that this has replaced.
-# Make it config-aware to that it creates things like .env files from examples.
 ###
 
 ## Setup ##
@@ -113,18 +112,39 @@ if [[ -n $up || -n $down || -n $build || -n $pull ]]; then
 		echo ""
 		pwd
 
+		# Ensure .env files exist so that all compose variables are populated.
+		if [[ -e ./env.example && ! -e ./.env ]]; then
+			echo "WARNING: .env file was not found, copying example as placeholder."
+			cp -v env.example .env
+		fi
+
+		# Ensure all configuration files have been created.
+		if [[ -d ./config ]]; then
+			ls ./config/*.example 2>/dev/null | while read example; do
+				real=${example//.example/}
+				if [[ ! -e $real ]]; then
+					echo "WARNING: $real was not found, copying $example."
+					cp -v $example $real
+				fi
+			done
+		fi
+
+		# Shut off container.
 		if [[ $down == "Y" ]]; then
 			[ -e docker-compose.yml ] && docker compose down
 		fi
 
+		# Update container from remote source such as Docker Hub.
 		if [[ $pull == "Y" ]]; then
 			[ -e docker-compose.yml ] && docker compose pull
 		fi
 
+		# Execute commands within the container's Dockerfile.
 		if [[ $build == "Y" ]]; then
 			[ -e Dockerfile ] && docker compose build
 		fi
 
+		# Run the container as a daemon.
 		if [[ $up == "Y" ]]; then
 			[ -e docker-compose.yml ] && docker compose up -d
 		fi
