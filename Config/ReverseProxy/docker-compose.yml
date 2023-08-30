@@ -23,6 +23,9 @@ services:
     deploy:
       mode: global
       resources:
+        limits:
+          cpus: '1.00'
+          memory: 512M
         reservations:
           cpus: '0.25'
           memory: 128M
@@ -38,6 +41,9 @@ services:
     deploy:
       mode: global
       resources:
+        limits:
+          cpus: '0.50'
+          memory: 256M
         reservations:
           cpus: '0.25'
           memory: 128M

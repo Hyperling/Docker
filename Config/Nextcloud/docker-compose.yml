@@ -33,6 +33,15 @@ services:
       - MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD
       - MYSQL_USER=$MYSQL_USER
       - MYSQL_PASSWORD=$MYSQL_PASSWORD
+    deploy:
+      mode: global
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 1G
+        reservations:
+          cpus: '0.25'
+          memory: 256M
 
   ## Redis ##
   nc-redis:
@@ -40,6 +49,12 @@ services:
     image: redis
     restart: always
     command: redis-server --requirepass $REDIS_HOST_PASSWORD
+    deploy:
+      mode: global
+      resources:
+        limits:
+          cpus: '0.25'
+          memory: 128M
 
   ## OnlyOffice ##
   nc-oo:
@@ -54,8 +69,8 @@ services:
       mode: global
       resources:
         limits:
-          cpus: '1.00'
-          memory: 2G
+          cpus: '0.75'
+          memory: 1G
 
   ## Nextcloud ##
   nc-app:
@@ -81,3 +96,12 @@ services:
       - MYSQL_PASSWORD=$MYSQL_PASSWORD
       - REDIS_HOST=$REDIS_HOST
       - REDIS_HOST_PASSWORD=$REDIS_HOST_PASSWORD
+    deploy:
+      mode: global
+      resources:
+        limits:
+          cpus: '2.00'
+          # No memory limit.
+        reservations:
+          cpus: '0.50'
+          memory: 512M
