@@ -76,6 +76,7 @@ while getopts ':Audbpsi:h' opt; do
 	esac
 done
 
+# This is done outside the getopts for readability.
 if [[ -n $all ]]; then
 	up="Y"; down="Y"; build="Y"; pull="Y"; stats="Y"
 fi
@@ -108,6 +109,7 @@ fi
 if [[ -n $up || -n $down || -n $build || -n $pull ]]; then
 	cd $DOCKER_HOME/Config
 	for dir in `ls`; do
+		# If this is a directory, enter it, otherwise skip to the next listing.
 		[ -d $dir ] && cd $dir || continue
 		echo ""
 		pwd
