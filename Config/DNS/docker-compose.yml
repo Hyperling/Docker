@@ -15,3 +15,12 @@ services:
     ports:
       - "53:53/udp"
       - "53:53/tcp"
+    deploy:
+      mode: global
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 512M
+        reservations:
+          cpus: '0.25'
+          memory: 128M
