@@ -50,6 +50,12 @@ services:
       - 8081:80
     environment:
       - JWT_SECRET=$JWT_SECRET
+    deploy:
+      mode: global
+      resources:
+        limits:
+          cpus: '1.00'
+          memory: 2G
 
   ## Nextcloud ##
   nc-app:
