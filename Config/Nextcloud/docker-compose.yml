@@ -11,10 +11,10 @@
 #     Got NC to work with OO after specifying the Advanced parameters!
 #   2023-08-26
 #     Try combining OnlyOffice to here again. It has been on its own since
-#       2023-07-25 but isn't being used for anything else. OO is slow to start
-#       and stop and upgrades will no longer be separate but but keeps it easier
-#       to maintain and may allow the internal address to be based on container
-#       name instead of the docker hosts's IP.
+#     2023-07-25 but isn't being used for anything else. OO is slow to respond
+#     and upgrades can no longer be done separately but this keeps it all easier
+#     to maintain and may allow the internal address to be based on container
+#     name instead of the docker hosts's IP.
 
 version: '3'
 
