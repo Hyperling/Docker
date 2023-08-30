@@ -5,8 +5,8 @@
 #   */5 * * * * /opt/Docker/Config/Nextcloud/cron.ksh
 
 # Check if a job is already going.
-PROG=`basename $0`
-RUNNING=`ps -ef | grep $PROG | grep -v grep | grep -v $$ | wc -l`
+PROG="$(basename -- "${BASH_SOURCE[0]}")"
+RUNNING=`ps -ef | grep $PROG | grep -v grep | grep -v $$ | grep -v "sh -c" | wc -l`
 if (( $RUNNING > 0 )); then
 	exit $RUNNING
 fi
