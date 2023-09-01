@@ -2,10 +2,6 @@
 # 2023-08-26 Hyperling
 # Combine all programs which loop over Config into one which takes parameters.
 
-## TBD ##
-# Delete the scripts that this has replaced.
-###
-
 ## Setup ##
 
 DIR="$(dirname -- "${BASH_SOURCE[0]}")"
@@ -16,7 +12,8 @@ source $DIR/../source.env
 
 function usage() {
 	# Function to give the usage of the program.
-	# Accepts 1 parameter for the exit code used to leave the program.
+	# Parameters:
+	#   1) The exit code used when leaving.
 	exit_code=$1
 	echo ""
 	echo -n "Usage: $PROG [-A ( -u | -d | -b | -p | -c | -s )] " 1>&2
@@ -72,7 +69,7 @@ function usage() {
 function check_container() {
 	# Ensure a container which will be accessed is either running or starting.
 	# Parameters:
-	#   1) CONTAINER, either as ID or Name
+	#   1) CONTAINER, either as ID or Name.
 	#   2) WHy the container is being checked.
 	container_to_check="$1"
 	reason_to_check="$2"
@@ -114,7 +111,9 @@ fi
 
 # Script will behave poorly if not run with admin privileges.
 if [[ $LOGNAME != "root" ]]; then
-	echo "WARNING: Script is intended for root user only. Please su or sudo/doas."
+	echo    "*************************************************************"
+	echo    "WARNING: Script is intended for root. Please su or sudo/doas."
+	echo -e "*************************************************************\n"
 fi
 
 # Options which only work if the container exists or is going to be started.
