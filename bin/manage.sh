@@ -3,8 +3,6 @@
 # Combine all programs which loop over Config into one which takes parameters.
 
 ## TBD ##
-# -l for logs.
-# -c for clean.
 # Delete the scripts that this has replaced.
 ###
 
@@ -21,15 +19,17 @@ function usage() {
 	# Accepts 1 parameter for the exit code used to leave the program.
 	exit_code=$1
 	echo ""
-	echo "Usage: $PROG [-A ( -u | -d | -b | -p | -s )] [-i CONTAINER] [-h]" 1>&2
+	echo -n "Usage: $PROG [-A ( -u | -d | -b | -p | -c | -s )] " 1>&2
+	echo "[-i CONTAINER] [-l CONTAINER] [-h]" 1>&2
 	cat <<- EOF
 
-		Manage all docker compose subprojects based on parameters.
-		If no options are given then 'docker ps' is performed and the program exits.
+		Manage all docker compose subprojects based on parameters. If no
+		options are given then 'docker ps' is performed and the program exits.
 
-		Parameters:
+		Parameters - Standalone:
+
 		  (ALL)
-		    -A : Equivalent of specifying '-udbps' to restart, update, and watch all containers.
+		    -A : Equivalent of specifying '-udbpcs' for a full upgrade service.
 
 		  (UP)
 		    -u : Start all containers with 'up -d'.
@@ -43,15 +43,24 @@ function usage() {
 		  (PULL)
 		    -p : Update all containers with 'pull'.
 
+		  (CLEAN)
+		    -c : Remove any abandoned Docker objects using the 'prune' commands.
+
 		  (STATS)
-		    -s : Tune in to the 'stats' of how each container is running. If INTERACT
-		         is also specified, this is executed after the session has been exited.
+		    -s : Tune in to the 'stats' of how each container is running.
+
+		Parameters - Specifying CONTAINER:
+		  Variable can be either the container ID or container name. If (UP) is
+		  also provided then the container does not need to be active, otherwise
+		  the container must be running so that it can be accessed.
 
 		  (INTERACT)
 		    -i CONTAINER : Remote into CONTAINER with 'exec -it CONTAINER sh'.
-		                   Variable can be either the container ID or container name.
-		                   If (UP) is also provided then the container does not need
-		                   to be active, otherwise the container must be running.
+
+		  (LOGS)
+		    -l CONTAINER : Follow the logs of CONTAINER with 'logs -f CONTAINER'.
+
+		Parameters - Other:
 
 		  (HELP)
 		    -h : Display this message.
@@ -60,17 +69,37 @@ function usage() {
 	exit $exit_code
 }
 
+function check_container() {
+	# Ensure a container which will be accessed is either running or starting.
+	# Parameters:
+	#   1) CONTAINER, either as ID or Name
+	#   2) WHy the container is being checked.
+	container_to_check="$1"
+	reason_to_check="$2"
+
+	exists=`docker ps | grep -c $container_to_check`
+	if [[ ( $exists == 0 && -z $up ) || ( -n $down && -z $up ) ]]; then
+		echo -n "ERROR: $container_to_check was requested for " 1>&2
+		echo "$reason_to_check but it is not up or going to be up." 1>&2
+		exit 2
+	fi
+
+	return
+}
+
 ## Parameters ##
 
-while getopts ':Audbpsi:h' opt; do
+while getopts ':Audbpcsi:l:h' opt; do
 	case $opt in
 		A) all="Y" ;;
 		u) up="Y" ;;
 		d) down="Y" ;;
 		b) build="Y" ;;
 		p) pull="Y" ;;
+		c) clean="Y" ;;
 		s) stats="Y" ;;
 		i) interact="$OPTARG" ;;
+		l) logs="$OPTARG" ;;
 		h) usage 0 ;;
 		*) echo "ERROR: Parameter '$OPTARG' not recognized." 1>&2 && usage 1 ;;
 	esac
@@ -78,7 +107,7 @@ done
 
 # This is done outside the getopts for readability.
 if [[ -n $all ]]; then
-	up="Y"; down="Y"; build="Y"; pull="Y"; stats="Y"
+	up="Y"; down="Y"; build="Y"; pull="Y"; clean="Y"; stats="Y"
 fi
 
 ## Validations ##
@@ -88,19 +117,20 @@ if [[ $LOGNAME != "root" ]]; then
 	echo "WARNING: Script is intended for root user only. Please su or sudo/doas."
 fi
 
-# Interact will only work if the container exists or is going to be started.
+# Options which only work if the container exists or is going to be started.
 if [[ -n $interact ]]; then
-	exists=`docker ps | grep -c $interact`
-	if [[ ( $exists == 0 && -z $up ) || ( -n $down && -z $up ) ]]; then
-		echo "ERROR: $interact was requested but it either is not or will not be active." 1>&2
-		exit 2
-	fi
+	check_container $interact interaction
+fi
+if [[ -n $logs ]]; then
+	check_container $logs logs
 fi
 
 ## Main ##
 
 # If no parameters are passed, list all the containers which are running.
-if [[ -z $up && -z $down && -z $build && -z $pull && -z $interact && -z $stats ]]; then
+if [[ -z $up && -z $down && -z $build && -z $pull && -z $clean
+	&& -z $interact && -z $logs && -z $stats
+]]; then
 	docker ps
 	exit 0
 fi
@@ -161,8 +191,24 @@ if [[ -n $interact ]]; then
 	docker exec -it $interact sh
 fi
 
+# Clean every type of Docker object which can be abandoined by Compose.
+if [[ -n $clean ]]; then
+	echo -e "\n*** Cleaning Abandoned Objects ***"
+	docker image prune -a
+	docker container prune
+	docker volume prune
+	docker network prune
+fi
+
+# Follow the logs of a container.
+if [[ -n $logs ]]; then
+	echo -e "\n*** Following Logs of $logs ***"
+	docker logs -f $logs
+fi
+
 # Watch a top-level performance and resource monitor.
 if [[ -n $stats ]]; then
+	echo -e "\n*** Tuning Into Stats ***"
 	docker stats
 fi
 
