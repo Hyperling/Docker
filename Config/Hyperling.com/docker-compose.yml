@@ -10,3 +10,9 @@ services:
     restart: always
     ports:
       - 8317:8080
+    deploy:
+      mode: global
+      resources:
+        limits:
+          cpus: '0.25'
+          memory: 256M

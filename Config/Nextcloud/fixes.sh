@@ -10,10 +10,6 @@ docker exec -itu www-data nc-app ./occ db:add-missing-columns
 docker exec -itu www-data nc-app ./occ db:add-missing-indices
 docker exec -itu www-data nc-app ./occ db:add-missing-primary-keys
 docker exec -itu www-data nc-app ./occ db:convert-filecache-bigint
-docker exec -it nc-app chown -Rc www-data:www-data .
-
-# 2023-02-12 Just for good measure.
-docker exec -itu www-data nc-app ./occ app:update --all
 
 # 2023-07-02
 # This maybe used to exist, but make sure that Files app is correct.

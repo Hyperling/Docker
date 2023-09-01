@@ -20,6 +20,15 @@ services:
       - ../../Volumes/ReverseProxy/letsencrypt:/etc/nginx/letsencrypt
       - ../../Volumes/ReverseProxy/letsencrypt-certs:/etc/nginx/certs
     command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
+    deploy:
+      mode: global
+      resources:
+        limits:
+          cpus: '1.00'
+          memory: 512M
+        reservations:
+          cpus: '0.25'
+          memory: 128M
 
   certbot:
     container_name: rp-certbot
@@ -29,3 +38,12 @@ services:
       - ../../Volumes/ReverseProxy/letsencrypt:/etc/letsencrypt
       - ../../Volumes/ReverseProxy/letsencrypt-certs:/etc/letsencrypt/nginx
     entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; cp -rL /etc/letsencrypt/live/* /etc/letsencrypt/nginx/; sleep 12h & wait $${!}; done;'"
+    deploy:
+      mode: global
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 256M
+        reservations:
+          cpus: '0.25'
+          memory: 128M

@@ -5,14 +5,9 @@
 
 ## Setup ##
 
-DIR="`dirname $0`"
-PROG=`basename $0`
-if [[ $DIR == *"."* ]]; then
-	DIR="`pwd`"
-fi
-if [[ -z $DOCKER_HOME ]]; then
-	DOCKER_HOME="$DIR/.."
-fi
+DIR="$(dirname -- "${BASH_SOURCE[0]}")"
+PROG="$(basename -- "${BASH_SOURCE[0]}")"
+source $DIR/../source.env
 
 dir=logs
 date_format="+%Y%m%d-%H%M%S"
