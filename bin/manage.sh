@@ -8,8 +8,8 @@
 
 ## Setup ##
 
-PROG="$(basename -- "${BASH_SOURCE[0]}")"
 DIR="$(dirname -- "${BASH_SOURCE[0]}")"
+PROG="$(basename -- "${BASH_SOURCE[0]}")"
 source $DIR/../source.env
 
 ## Functions ##
