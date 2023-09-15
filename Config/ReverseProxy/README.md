@@ -79,4 +79,5 @@ If wanted as a one-line command:
 1. (Optional) If the system needs a cert added, run the placeholder script.
 1. Restart the project based on Update Config above.
 1. (Optional) Now you may run the letsencrypt script for a real certificate.
+1. (Optional) Run another Update Config to make sure the certs are loaded.
 1. Done! If set up correctly the site should be live.
