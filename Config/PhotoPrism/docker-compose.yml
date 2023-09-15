@@ -32,6 +32,7 @@ version: '3.5'
 
 services:
   pp-app:
+    container_name: pp-app
     image: photoprism/photoprism:latest
     ## Don't enable automatic restarts until PhotoPrism has been properly configured and tested!
     ## If the service gets stuck in a restart loop, this points to a memory, filesystem, network, or database issue:
@@ -39,7 +40,7 @@ services:
     # restart: unless-stopped
     stop_grace_period: 10s
     depends_on:
-      - mariadb
+      - pp-db
     security_opt:
       - seccomp:unconfined
       - apparmor:unconfined
@@ -71,7 +72,7 @@ services:
       PHOTOPRISM_UPLOAD_NSFW: $PHOTOPRISM_UPLOAD_NSFW # allows uploads that MAY be offensive (no effect without TensorFlow)
       # PHOTOPRISM_DATABASE_DRIVER: "sqlite"         # SQLite is an embedded database that doesn't require a server
       PHOTOPRISM_DATABASE_DRIVER: "mysql"            # use MariaDB 10.5+ or MySQL 8+ instead of SQLite for improved performance
-      PHOTOPRISM_DATABASE_SERVER: "mariadb:3306"     # MariaDB or MySQL database server (hostname:port)
+      PHOTOPRISM_DATABASE_SERVER: "pp-db:3306"     # MariaDB or MySQL database server (hostname:port)
       PHOTOPRISM_DATABASE_NAME: $MARIADB_DATABASE    # MariaDB or MySQL database schema name
       PHOTOPRISM_DATABASE_USER: $MARIADB_USER         # MariaDB or MySQL database user name
       PHOTOPRISM_DATABASE_PASSWORD: $MARIADB_PASSWORD # MariaDB or MySQL database user password
@@ -104,15 +105,17 @@ services:
     ## Storage Folders ##
     volumes:
       # Original media files (DO NOT REMOVE)
-      - "../../PhotoPrism/originals:/photoprism/originals"
+      - "../../Volumes/PhotoPrism/originals:/photoprism/originals"
       # *Writable* storage folder for cache, database, and sidecar files (DO NOT REMOVE)
-      - "../../PhotoPrism/storage:/photoprism/storage"
+      - "../../Volumes/PhotoPrism/storage:/photoprism/storage"
       # *Optional* base folder from which files can be imported to originals
-      - "../../ProtoPrism/imports_go_here:/photoprism/import"
+      # Importing reorganizes files+folders, would rather they remain intact.
+      #- "../../Volumes/PhotoPrism/imports_go_here:/photoprism/import"
 
   ## Database Server (recommended)
   ## see https://docs.photoprism.app/getting-started/faq/#should-i-use-sqlite-mariadb-or-mysql
   pp-db:
+    container_name: pp-db
     image: mariadb:10.11
     ## If MariaDB gets stuck in a restart loop, this points to a memory or filesystem issue:
     ## https://docs.photoprism.app/getting-started/troubleshooting/#fatal-server-errors
@@ -124,7 +127,7 @@ services:
     command: mariadbd --innodb-buffer-pool-size=512M --transaction-isolation=READ-COMMITTED --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --max-connections=512 --innodb-rollback-on-timeout=OFF --innodb-lock-wait-timeout=120
     ## Never store database files on an unreliable device such as a USB flash drive, an SD card, or a shared network folder:
     volumes:
-      - "../../PhotoPrism/database:/var/lib/mysql" # DO NOT REMOVE
+      - "../../Volumes/PhotoPrism/database:/var/lib/mysql" # DO NOT REMOVE
     environment:
       MARIADB_AUTO_UPGRADE: "1"
       MARIADB_INITDB_SKIP_TZINFO: "1"
