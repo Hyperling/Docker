@@ -21,7 +21,7 @@ if [[ ! -d $CERT_DIR ]]; then
 fi
 
 # The container needs to be running in order to use the certbot command.
-certbot_running=`docker ps | grep -c reverseproxy-certbot-1`
+certbot_running=`docker ps | grep -c rp-certbot`
 if [[ $certbot_running != 1 ]]; then
 	echo "ERROR: Certbot container does not appear to be running, cannot continue." >&2
 	exit 1
@@ -85,12 +85,12 @@ grep -l proxy_pass $DIR/config/conf.d/*.* | while read file; do
 		echo "Domains='$domains'"
 
 		echo "Attempting to create certs at $CERT_DIR/$filename."
-		docker exec reverseproxy-certbot-1  \
+		docker exec rp-certbot  \
 				certbot certonly -n --webroot $dry_run \
 				-w /etc/letsencrypt --agree-tos -m $email -d $filename
 
 		if [[ -z $dry_run ]]; then
-			docker exec reverseproxy-certbot-1 \
+			docker exec rp-certbot \
 					sh -c "cp -rL /etc/letsencrypt/live/$filename /etc/letsencrypt/nginx/"
 			ls -lh $CERT_DIR/$filename/*
 		fi
