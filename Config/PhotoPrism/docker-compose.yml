@@ -119,6 +119,12 @@ services:
       # *Optional* base folder from which files can be imported to originals
       # Importing reorganizes files+folders, would rather they remain intact.
       #- "../../Volumes/PhotoPrism/imports_go_here:/photoprism/import"
+    deploy:
+      mode: global
+      resources:
+        limits:
+          cpus: '2.00'
+          memory: 2G
 
   ## Database Server (recommended)
   ## see https://docs.photoprism.app/getting-started/faq/#should-i-use-sqlite-mariadb-or-mysql
@@ -143,6 +149,12 @@ services:
       MARIADB_USER: $MARIADB_USER
       MARIADB_PASSWORD: $MARIADB_PASSWORD
       MARIADB_ROOT_PASSWORD: $MARIADB_ROOT_PASSWORD
+    deploy:
+      mode: global
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 512M
 
   # Configured but not using this, would prefer to update manually, and the
   # volume needs also seem sort of odd. Do not want it to harm other projects.
