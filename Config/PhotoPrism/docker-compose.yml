@@ -1,5 +1,13 @@
 # PhotoPrism: (https://www.photoprism.app/)
-# Host photo albums  on a web server rather then emailing and texting.
+# Host media on a web server rather then emailing and texting individuals.
+
+##
+# Membership Note:
+#  Public sharing can be done without an account/membership/subscription. Share
+#  a folder, change the secret to something like "public", then share that link.
+#  If other folders have the same done then they are accessible by the same URL
+#  which was sent previously, such as https://FQDN/s/public for secret "public".
+##
 
 ##
 # Documentation:
