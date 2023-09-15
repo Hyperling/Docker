@@ -1,0 +1,161 @@
+# PhotoPrism: (https://www.photoprism.app/)
+# Host media on a web server rather then emailing and texting individuals.
+
+##
+# Membership Note:
+#  Public sharing can be done without an account/membership/subscription. Share
+#  a folder, change the secret to something like "public", then share that link.
+#  If other folders have the same done then they are accessible by the same URL
+#  which was sent previously, such as https://FQDN/s/public for secret "public".
+##
+
+##
+# Documentation:
+#
+#   Official:
+#   - https://docs.photoprism.app/getting-started/docker-compose/
+#
+#   Alternative:
+#   - https://www.linuxlinks.com/machine-learning-linux-photoprism-ai-powered-photos-app/
+#
+#   Activation?
+#   - https://www.photoprism.app/kb/activation
+#
+#   Troubleshooting Checklists:
+#   - https://docs.photoprism.app/getting-started/troubleshooting/
+#   - https://docs.photoprism.app/getting-started/troubleshooting/docker/
+#   - https://docs.photoprism.app/getting-started/troubleshooting/mariadb/
+#
+#   CLI Commands:
+#   - https://docs.photoprism.app/getting-started/docker-compose/#command-line-interface
+#
+##
+
+##
+# Changelog:
+#   2023-09-15: File created and tweaked based on 'https://dl.photoprism.app/docker/docker-compose.yml'.
+##
+
+version: '3.5'
+
+services:
+  pp-app:
+    container_name: pp-app
+    image: photoprism/photoprism:latest
+    ## Don't enable automatic restarts until PhotoPrism has been properly configured and tested!
+    ## If the service gets stuck in a restart loop, this points to a memory, filesystem, network, or database issue:
+    ## https://docs.photoprism.app/getting-started/troubleshooting/#fatal-server-errors
+    # restart: unless-stopped
+    stop_grace_period: 10s
+    depends_on:
+      - pp-db
+    security_opt:
+      - seccomp:unconfined
+      - apparmor:unconfined
+    ports:
+      - "2342:2342" # HTTP port (host:container)
+    environment:
+      PHOTOPRISM_ADMIN_USER: $PHOTOPRISM_ADMIN_USER         # admin login username
+      PHOTOPRISM_ADMIN_PASSWORD: $PHOTOPRISM_ADMIN_PASSWORD # initial admin password (8-72 characters)
+      PHOTOPRISM_AUTH_MODE: "password"               # authentication mode (public, password)
+      PHOTOPRISM_SITE_URL: "http://localhost:2342/"  # server URL in the format "http(s)://domain.name(:port)/(path)"
+      PHOTOPRISM_DISABLE_TLS: "false"                # disables HTTPS/TLS even if the site URL starts with https:// and a certificate is available
+      PHOTOPRISM_DEFAULT_TLS: "true"                 # defaults to a self-signed HTTPS/TLS certificate if no other certificate is available
+      PHOTOPRISM_ORIGINALS_LIMIT: $PHOTOPRISM_ORIGINALS_LIMIT # file size limit for originals in MB (increase for high-res video)
+      PHOTOPRISM_HTTP_COMPRESSION: "gzip"            # improves transfer speed and bandwidth utilization (none or gzip)
+      PHOTOPRISM_LOG_LEVEL: "info"                   # log level: trace, debug, info, warning, error, fatal, or panic
+      PHOTOPRISM_READONLY: "false"                   # do not modify originals directory (reduced functionality)
+      PHOTOPRISM_EXPERIMENTAL: "false"               # enables experimental features
+      PHOTOPRISM_DISABLE_CHOWN: "false"              # disables updating storage permissions via chmod and chown on startup
+      PHOTOPRISM_DISABLE_WEBDAV: "false"             # disables built-in WebDAV server
+      PHOTOPRISM_DISABLE_SETTINGS: "false"           # disables settings UI and API
+      PHOTOPRISM_DISABLE_TENSORFLOW: "false"         # disables all features depending on TensorFlow
+      PHOTOPRISM_DISABLE_FACES: "false"              # disables face detection and recognition (requires TensorFlow)
+      PHOTOPRISM_DISABLE_CLASSIFICATION: "false"     # disables image classification (requires TensorFlow)
+      PHOTOPRISM_DISABLE_VECTORS: "false"            # disables vector graphics support
+      PHOTOPRISM_DISABLE_RAW: "false"                # disables indexing and conversion of RAW images
+      PHOTOPRISM_RAW_PRESETS: "false"                # enables applying user presets when converting RAW images (reduces performance)
+      PHOTOPRISM_JPEG_QUALITY: 85                    # a higher value increases the quality and file size of JPEG images and thumbnails (25-100)
+      PHOTOPRISM_DETECT_NSFW: $PHOTOPRISM_DETECT_NSFW # automatically flags photos as private that MAY be offensive (requires TensorFlow)
+      PHOTOPRISM_UPLOAD_NSFW: $PHOTOPRISM_UPLOAD_NSFW # allows uploads that MAY be offensive (no effect without TensorFlow)
+      # PHOTOPRISM_DATABASE_DRIVER: "sqlite"         # SQLite is an embedded database that doesn't require a server
+      PHOTOPRISM_DATABASE_DRIVER: "mysql"            # use MariaDB 10.5+ or MySQL 8+ instead of SQLite for improved performance
+      PHOTOPRISM_DATABASE_SERVER: "pp-db:3306"     # MariaDB or MySQL database server (hostname:port)
+      PHOTOPRISM_DATABASE_NAME: $MARIADB_DATABASE    # MariaDB or MySQL database schema name
+      PHOTOPRISM_DATABASE_USER: $MARIADB_USER         # MariaDB or MySQL database user name
+      PHOTOPRISM_DATABASE_PASSWORD: $MARIADB_PASSWORD # MariaDB or MySQL database user password
+      PHOTOPRISM_SITE_CAPTION: "AI-Powered Photos App"
+      PHOTOPRISM_SITE_DESCRIPTION: ""                # meta site description
+      PHOTOPRISM_SITE_AUTHOR: ""                     # meta site author
+      ## Video Transcoding (https://docs.photoprism.app/getting-started/advanced/transcoding/):
+      PHOTOPRISM_FFMPEG_ENCODER: $PHOTOPRISM_FFMPEG_ENCODER # H.264/AVC encoder (software, intel, nvidia, apple, raspberry, or vaapi)
+      PHOTOPRISM_FFMPEG_SIZE: $PHOTOPRISM_FFMPEG_SIZE       # video size limit in pixels (720-7680) (default: 3840)
+      PHOTOPRISM_FFMPEG_BITRATE: $PHOTOPRISM_FFMPEG_BITRATE # video bitrate limit in Mbit/s (default: 50)
+      ## Run/install on first startup (options: update https gpu tensorflow davfs clitools clean):
+      # PHOTOPRISM_INIT: "https gpu tensorflow"
+      ## Run as a non-root user after initialization (supported: 0, 33, 50-99, 500-600, and 900-1200):
+      # PHOTOPRISM_UID: 1000
+      # PHOTOPRISM_GID: 1000
+      # PHOTOPRISM_UMASK: 0000
+    ## Start as non-root user before initialization (supported: 0, 33, 50-99, 500-600, and 900-1200):
+    # user: "1000:1000"
+    ## Share hardware devices with FFmpeg and TensorFlow (optional):
+    # devices:
+    #  - "/dev/dri:/dev/dri"                         # Intel QSV
+    #  - "/dev/nvidia0:/dev/nvidia0"                 # Nvidia CUDA
+    #  - "/dev/nvidiactl:/dev/nvidiactl"
+    #  - "/dev/nvidia-modeset:/dev/nvidia-modeset"
+    #  - "/dev/nvidia-nvswitchctl:/dev/nvidia-nvswitchctl"
+    #  - "/dev/nvidia-uvm:/dev/nvidia-uvm"
+    #  - "/dev/nvidia-uvm-tools:/dev/nvidia-uvm-tools"
+    #  - "/dev/video11:/dev/video11"                 # Video4Linux Video Encode Device (h264_v4l2m2m)
+    working_dir: "/photoprism" # do not change or remove
+    ## Storage Folders ##
+    volumes:
+      # Original media files (DO NOT REMOVE)
+      - "../../Volumes/PhotoPrism/originals:/photoprism/originals"
+      # *Writable* storage folder for cache, database, and sidecar files (DO NOT REMOVE)
+      - "../../Volumes/PhotoPrism/storage:/photoprism/storage"
+      # *Optional* base folder from which files can be imported to originals
+      # Importing reorganizes files+folders, would rather they remain intact.
+      #- "../../Volumes/PhotoPrism/imports_go_here:/photoprism/import"
+
+  ## Database Server (recommended)
+  ## see https://docs.photoprism.app/getting-started/faq/#should-i-use-sqlite-mariadb-or-mysql
+  pp-db:
+    container_name: pp-db
+    image: mariadb:10.11
+    ## If MariaDB gets stuck in a restart loop, this points to a memory or filesystem issue:
+    ## https://docs.photoprism.app/getting-started/troubleshooting/#fatal-server-errors
+    restart: unless-stopped
+    stop_grace_period: 5s
+    security_opt: # see https://github.com/MariaDB/mariadb-docker/issues/434#issuecomment-1136151239
+      - seccomp:unconfined
+      - apparmor:unconfined
+    command: mariadbd --innodb-buffer-pool-size=512M --transaction-isolation=READ-COMMITTED --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --max-connections=512 --innodb-rollback-on-timeout=OFF --innodb-lock-wait-timeout=120
+    ## Never store database files on an unreliable device such as a USB flash drive, an SD card, or a shared network folder:
+    volumes:
+      - "../../Volumes/PhotoPrism/database:/var/lib/mysql" # DO NOT REMOVE
+    environment:
+      MARIADB_AUTO_UPGRADE: "1"
+      MARIADB_INITDB_SKIP_TZINFO: "1"
+      MARIADB_DATABASE: $MARIADB_DATABASE
+      MARIADB_USER: $MARIADB_USER
+      MARIADB_PASSWORD: $MARIADB_PASSWORD
+      MARIADB_ROOT_PASSWORD: $MARIADB_ROOT_PASSWORD
+
+  # Configured but not using this, would prefer to update manually, and the
+  # volume needs also seem sort of odd. Do not want it to harm other projects.
+  ## Watchtower upgrades services automatically (optional)
+  ## see https://docs.photoprism.app/getting-started/updates/#watchtower
+  ## activate via "COMPOSE_PROFILES=update docker compose up -d"
+  #pp-watchtower:
+  #  restart: unless-stopped
+  #  image: containrrr/watchtower
+  #  profiles: ["update"]
+  #  environment:
+  #    WATCHTOWER_CLEANUP: "true"
+  #    WATCHTOWER_POLL_INTERVAL: 7200 # checks for updates every two hours
+  #  volumes:
+  #    #- "/var/run/docker.sock:/var/run/docker.sock"
+  #    #- "~/.docker/config.json:/config.json" # optional, for authentication if you have a Docker Hub account
