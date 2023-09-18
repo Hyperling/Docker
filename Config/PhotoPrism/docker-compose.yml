@@ -46,6 +46,7 @@ services:
     ## If the service gets stuck in a restart loop, this points to a memory, filesystem, network, or database issue:
     ## https://docs.photoprism.app/getting-started/troubleshooting/#fatal-server-errors
     # restart: unless-stopped
+    restart: always
     stop_grace_period: 10s
     depends_on:
       - pp-db
@@ -133,7 +134,8 @@ services:
     image: mariadb:10.11
     ## If MariaDB gets stuck in a restart loop, this points to a memory or filesystem issue:
     ## https://docs.photoprism.app/getting-started/troubleshooting/#fatal-server-errors
-    restart: unless-stopped
+    #restart: unless-stopped
+    restart: always
     stop_grace_period: 5s
     security_opt: # see https://github.com/MariaDB/mariadb-docker/issues/434#issuecomment-1136151239
       - seccomp:unconfined
