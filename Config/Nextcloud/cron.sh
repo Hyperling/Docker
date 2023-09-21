@@ -16,6 +16,7 @@ sh -c "docker exec -u www-data nc-app php cron.php --define apc.enable_cli=1"
 
 # 2023-08-25 From fixes.sh, keep ownership correct and apps up to date.
 sh -c "docker exec -it nc-app chown -Rc www-data:www-data ."
-sh -c "docker exec -itu www-data nc-app ./occ app:update --all"
+# No longer update apps in advance of NC updates, allow the upgrade process to do it.
+#sh -c "docker exec -itu www-data nc-app ./occ app:update --all"
 
 exit 0
