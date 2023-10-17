@@ -28,7 +28,6 @@
 #
 #   CLI Commands:
 #   - https://docs.photoprism.app/getting-started/docker-compose/#command-line-interface
-#
 ##
 
 ##
@@ -45,7 +44,8 @@ services:
     ## Don't enable automatic restarts until PhotoPrism has been properly configured and tested!
     ## If the service gets stuck in a restart loop, this points to a memory, filesystem, network, or database issue:
     ## https://docs.photoprism.app/getting-started/troubleshooting/#fatal-server-errors
-    # restart: unless-stopped
+    #restart: unless-stopped
+    restart: always
     stop_grace_period: 10s
     depends_on:
       - pp-db
@@ -58,7 +58,7 @@ services:
       PHOTOPRISM_ADMIN_USER: $PHOTOPRISM_ADMIN_USER         # admin login username
       PHOTOPRISM_ADMIN_PASSWORD: $PHOTOPRISM_ADMIN_PASSWORD # initial admin password (8-72 characters)
       PHOTOPRISM_AUTH_MODE: "password"               # authentication mode (public, password)
-      PHOTOPRISM_SITE_URL: "http://localhost:2342/"  # server URL in the format "http(s)://domain.name(:port)/(path)"
+      PHOTOPRISM_SITE_URL: $PHOTOPRISM_SITE_URL      # server URL in the format "http(s)://domain.name(:port)/(path)"
       PHOTOPRISM_DISABLE_TLS: "false"                # disables HTTPS/TLS even if the site URL starts with https:// and a certificate is available
       PHOTOPRISM_DEFAULT_TLS: "true"                 # defaults to a self-signed HTTPS/TLS certificate if no other certificate is available
       PHOTOPRISM_ORIGINALS_LIMIT: $PHOTOPRISM_ORIGINALS_LIMIT # file size limit for originals in MB (increase for high-res video)
@@ -119,6 +119,12 @@ services:
       # *Optional* base folder from which files can be imported to originals
       # Importing reorganizes files+folders, would rather they remain intact.
       #- "../../Volumes/PhotoPrism/imports_go_here:/photoprism/import"
+    deploy:
+      mode: global
+      resources:
+        limits:
+          cpus: '2.00'
+          memory: 2G
 
   ## Database Server (recommended)
   ## see https://docs.photoprism.app/getting-started/faq/#should-i-use-sqlite-mariadb-or-mysql
@@ -127,7 +133,8 @@ services:
     image: mariadb:10.11
     ## If MariaDB gets stuck in a restart loop, this points to a memory or filesystem issue:
     ## https://docs.photoprism.app/getting-started/troubleshooting/#fatal-server-errors
-    restart: unless-stopped
+    #restart: unless-stopped
+    restart: always
     stop_grace_period: 5s
     security_opt: # see https://github.com/MariaDB/mariadb-docker/issues/434#issuecomment-1136151239
       - seccomp:unconfined
@@ -143,6 +150,12 @@ services:
       MARIADB_USER: $MARIADB_USER
       MARIADB_PASSWORD: $MARIADB_PASSWORD
       MARIADB_ROOT_PASSWORD: $MARIADB_ROOT_PASSWORD
+    deploy:
+      mode: global
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 512M
 
   # Configured but not using this, would prefer to update manually, and the
   # volume needs also seem sort of odd. Do not want it to harm other projects.

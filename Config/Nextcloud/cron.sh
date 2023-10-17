@@ -12,10 +12,11 @@ if (( $RUNNING > 0 )); then
 fi
 
 # 2023-08-25 From crontab.
-docker exec -u www-data nc-app php cron.php --define apc.enable_cli=1
+sh -c "docker exec -u www-data nc-app php cron.php --define apc.enable_cli=1"
 
 # 2023-08-25 From fixes.sh, keep ownership correct and apps up to date.
-docker exec -it nc-app chown -Rc www-data:www-data .
-docker exec -itu www-data nc-app ./occ app:update --all
+sh -c "docker exec -it nc-app chown -Rc www-data:www-data ."
+# No longer update apps in advance of NC updates, allow the upgrade process to do it.
+#sh -c "docker exec -itu www-data nc-app ./occ app:update --all"
 
 exit 0
