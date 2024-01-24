@@ -67,23 +67,17 @@ fi
 
 while getopts ":46dtvh" opt; do
 	case $opt in
-		4)
-			v4="Y"
+		4)	v4="Y"
 			;;
-		6)
-			v6="Y"
+		6) v6="Y"
 			;;
-		d | t)
-			dry_run="Y"
+		d | t) dry_run="Y"
 			;;
-		v)
-			set -x
+		v) set -x
 			;;
-		h)
-			usage 0
+		h) usage 0
 			;;
-		*)
-			echo "ERROR: Parameter $opt not recognized."
+		*) echo "ERROR: Parameter $opt not recognized."
 			usage 1
 			;;
 	esac

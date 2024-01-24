@@ -8,8 +8,15 @@ FROM debian:testing
 # Install Dependencies
 RUN apt update && apt install -y sudo php-fpm nodejs npm
 
+# Copy Static Content
+RUN rm -rfv files
+COPY ./files files
+RUN rm -rfv files/README*
+
 # Run Website
 CMD rm -rfv www && \
     git clone https://github.com/Hyperling/www www && \
+    rm -rfv www/files && \
+    mv files www/ && \
     cd www && \
     ./run.sh
