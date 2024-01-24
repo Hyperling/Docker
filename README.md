@@ -1,14 +1,14 @@
 # My Docker Setup
 Scripting my way into the Docker world. I was unable to find a good tutorial on
 using and managing containers so this is what made sense to me based on practice
-with `docker-compose`. I am still new-ish to Docker and am likely to make
-mistakes, but you're welcome to learn with me. ;)
+with `docker-compose`. Also has some usages of `Dockerfile` to build some apps.
 
 ## Disclaimer
-Currently the project only focuses on `apt` based operating systems.
+Currently the project only focuses on `apt` based operating systems, and is
+being used in production by the latest Debian release.
 
 ## Other README's
-Each `./Config/PROJECT/` folder also contains its own README file with specific
+Each `Config/PROJECT/` folder also contains its own README file with specific
 information to running that sub project. This file's job is to cover the general
 Docker installation. The others then contain details on their program setup.
 
@@ -24,7 +24,7 @@ apt install git bash
 
 Clone the project. You may choose anywhere, but `/opt/Docker` is recommended.
 ```
-git clone https://github.com/hyperling/docker /opt/Docker
+git clone https://github.com/Hyperling/Docker /opt/Docker
 ```
 
 Load the environment variables.
@@ -37,28 +37,42 @@ Install docker to the system using the official repos.
 install.sh
 ```
 
-Create an area to add a new product.
+Copy default configuration for usage by management script.
+For example, to enable Nextcloud:
+```
+cd /opt/Docker/Config/Nextcloud
+cp docker-compose.standard.yml docker-compose.yml
+cp env.standard .env
+cd $DOCKER_HOME
+```
+
+Be sure to edit the environment file to update any passwords or preferences.
+```
+vi Config/Nextcloud/.env
+```
+
+If you have a new configuration to add, create an area for the new product.
 ```
 create.sh PROJECT_NAME
 ```
 
 Edit the project's details.
 ```
-vi /opt/Docker/Config/PROJECT_NAME/docker-compose.yml
+vi Config/PROJECT_NAME/docker-compose.yml
 ```
 
-Start all of the docker projects.
+Start all of the configured docker projects.
 ```
-start.sh
+manage.sh -u
 ```
 
-Cross your fingers and hope to profit!
+Cross your fingers and hope to succeed!
 
 ## Folders
 
 ### Config
 Compose projects are set up here. Each folder should have a `docker-compose.yml`
-file set up.
+file set up unless it is for utility such as DynamicDNS, which is used in CRON.
 
 ### Volumes
 The data of the files go here if the Config is done correctly. I think this
@@ -70,11 +84,15 @@ directory other than `/opt/Docker`, this project is location agnostic.
 ### bin
 Scripts to help make life easier. Some are pretty basic, but others do nice
 things like handle the container IDs.
-* `install.sh` : Install dependencies on a new server with apt.
-* `create.sh` : Create a new folder with the needed yml file.
-* `start.sh` : Start all compose containers.
-* `stop.sh` : Stop all compose containers.
-* `get_logs.sh` : Create log files rather than using the `docker log` command or
+- `create.sh`
+    - Create a new folder with the needed yml file.
+- `get_logs.sh`
+    - Create log files rather than using the `docker log` command or
     searching in /var/whatever.
-* `uninstall.sh` : If something goes wrong and you'd like to start from scratch
-    without provisioning a new server then this should do the job.
+- `install.sh`
+    - Install dependencies on a new server with apt.
+- `manage.sh`
+    - Start, stop, update, rebuild, etc all compose containers.
+- `uninstall.sh`
+    - If something goes wrong and you'd like to start from scratch without
+      provisioning a new server then this should do the job.
