@@ -6,7 +6,6 @@
 
 DIR="$(dirname -- "${BASH_SOURCE[0]}")"
 PROG="$(basename -- "${BASH_SOURCE[0]}")"
-source $DIR/../../source.env
 source $DIR/.env
 
 ## Main ##
@@ -27,11 +26,11 @@ docker exec -itu www-data nc-app ./occ maintenance:mode --on
 # https://mariadb.com/kb/en/mariadb-check/
 
 echo "`date` - Checking DB Tables"
-time docker exec -itu www-data nc-db mariadb-check \
+time docker exec -it nc-db mariadb-check \
 	-Ac --user="$MYSQL_USER" --password="$MYSQL_PASSWORD"
 
 echo "`date` - Analyzing DB Tables"
-time docker exec -itu www-data nc-db mariadb-check \
+time docker exec -it nc-db mariadb-check \
 	-Aa --user="$MYSQL_USER" --password="$MYSQL_PASSWORD"
 
 echo "`date` - Optimizing DB Tables -- May take quite some time!!"
