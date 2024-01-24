@@ -40,7 +40,7 @@ services:
       resources:
         limits:
           cpus: '0.20'
-          memory: 64M
+          memory: 128M
 
   ## Redis ##
   nc-redis:
