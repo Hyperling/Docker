@@ -1,0 +1,103 @@
+# Nextcloud configuration.
+# This is a revised version of the original work here:
+#   https://hub.docker.com/_/nextcloud
+
+# Changelog:
+#   2023-07-16
+#     Change from mariadb:10.5 to 10.6.
+#   2023-08-20
+#     Add Redis. (https://markontech.com/docker/setup-nextcloud-with-redis-using-docker/)
+#   2023-08-21
+#     Got NC to work with OO after specifying the Advanced parameters!
+#   2023-08-26
+#     Try combining OnlyOffice to here again. It has been on its own since
+#     2023-07-25 but isn't being used for anything else. OO is slow to respond
+#     and upgrades can no longer be done separately but this keeps it all easier
+#     to maintain and may allow the internal address to be based on container
+#     name instead of the docker hosts's IP.
+#   2024-01-23
+#     Experimenting with how small a Nextcloud installation can survive.
+
+version: '3'
+
+services:
+
+  ## MariaDB ##
+  nc-db:
+    container_name: nc-db
+    image: mariadb:10.6
+    restart: always
+    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
+    volumes:
+      - ../../Volumes/Nextcloud/mariadb:/var/lib/mysql
+    environment:
+      - MYSQL_DATABASE=$MYSQL_DATABASE
+      - MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD
+      - MYSQL_USER=$MYSQL_USER
+      - MYSQL_PASSWORD=$MYSQL_PASSWORD
+    deploy:
+      mode: global
+      resources:
+        limits:
+          cpus: '0.20'
+          memory: 128M
+
+  ## Redis ##
+  nc-redis:
+    container_name: nc-redis
+    image: redis
+    restart: always
+    command: redis-server --requirepass $REDIS_HOST_PASSWORD
+    deploy:
+      mode: global
+      resources:
+        limits:
+          cpus: '0.1'
+          memory: 64M
+
+  ### OnlyOffice ##
+  ##nc-oo:
+  ##  container_name: nc-oo
+  ##  image: onlyoffice/documentserver
+  ##  restart: always
+  ##  ports:
+  ##    - 8081:80
+  ##  environment:
+  ##    - JWT_SECRET=$JWT_SECRET
+  ##  deploy:
+  ##    mode: global
+  ##    resources:
+  ##      limits:
+  ##        cpus: '0.75'
+  ##        memory: 1G
+
+  ## Nextcloud ##
+  nc-app:
+    container_name: nc-app
+    image: nextcloud
+    restart: always
+    ports:
+      - 8080:80
+    links:
+      - nc-db
+      - nc-redis
+      - nc-oo
+    volumes:
+      - ../../Volumes/Nextcloud/nextcloud:/var/www/html
+    environment:
+      - NEXTCLOUD_ADMIN_USER=$NEXTCLOUD_ADMIN_USER
+      - NEXTCLOUD_ADMIN_PASSWORD=$NEXTCLOUD_ADMIN_PASSWORD
+      - PHP_MEMORY_LIMIT=$PHP_MEMORY_LIMIT
+      - PHP_UPLOAD_LIMIT=$PHP_UPLOAD_LIMIT
+      - MYSQL_HOST=$MYSQL_HOST
+      - MYSQL_DATABASE=$MYSQL_DATABASE
+      - MYSQL_USER=$MYSQL_USER
+      - MYSQL_PASSWORD=$MYSQL_PASSWORD
+      - REDIS_HOST=$REDIS_HOST
+      - REDIS_HOST_PASSWORD=$REDIS_HOST_PASSWORD
+    deploy:
+      mode: global
+      resources:
+        limits:
+          cpus: '0.30'
+          memory: 512M
