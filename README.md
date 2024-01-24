@@ -43,12 +43,11 @@ For example, to enable Nextcloud:
 cd $DOCKER_HOME/Config/Nextcloud
 cp docker-compose.standard.yml docker-compose.yml
 cp env.standard .env
-cd $DOCKER_HOME
 ```
 
 Be sure to edit the environment file to update any passwords or preferences.
 ```
-vi Config/Nextcloud/.env
+vi $DOCKER_HOME/Config/Nextcloud/.env
 ```
 
 If you have a new configuration to add, create an area for the new product.
@@ -58,7 +57,7 @@ create.sh PROJECT_NAME
 
 Edit the project's details.
 ```
-vi Config/PROJECT_NAME/docker-compose.yml
+vi $DOCKER_HOME/Config/PROJECT_NAME/docker-compose.yml
 ```
 
 Start all of the configured docker projects.
