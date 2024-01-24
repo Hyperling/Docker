@@ -6,7 +6,7 @@
 
 DIR="$(dirname -- "${BASH_SOURCE[0]}")"
 PROG="$(basename -- "${BASH_SOURCE[0]}")"
-source $DIR/../source.env
+source $DIR/../../source.env
 
 ## Main ##
 
@@ -40,4 +40,3 @@ docker exec -itu www-data nc-app ./occ versions:cleanup
 docker exec -itu www-data nc-app ./occ files:cleanup
 
 exit 0
-
