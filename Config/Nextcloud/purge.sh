@@ -26,7 +26,7 @@ echo -e "\n`date` - Clean Trash"
 time docker exec -itu www-data nc-app ./occ trashbin:cleanup --all-users
 
 echo -e "\n`date` - Trash Previews"
-rm -v $DOCKER_HOME/Volumes/Nextcloud/nextcloud/data/appdata_*/preview/*
+rm -rfv $DOCKER_HOME/Volumes/Nextcloud/nextcloud/data/appdata_*/preview/*
 
 echo -e "\n*** Database ***"
 
