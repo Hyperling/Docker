@@ -7,6 +7,7 @@
 DIR="$(dirname -- "${BASH_SOURCE[0]}")"
 PROG="$(basename -- "${BASH_SOURCE[0]}")"
 source $DIR/.env
+source $DIR/../../source.env
 
 ## Main ##
 
@@ -25,7 +26,7 @@ echo -e "\n`date` - Clean Trash"
 time docker exec -itu www-data nc-app ./occ trashbin:cleanup --all-users
 
 echo -e "\n`date` - Trash Previews"
-mv -v $DOCKER_HOME/Volumes/Nextcloud/nextcloud/data/appdata_*/preview ~/TRASH/
+rm -v $DOCKER_HOME/Volumes/Nextcloud/nextcloud/data/appdata_*/preview/*
 
 echo -e "\n*** Database ***"
 
