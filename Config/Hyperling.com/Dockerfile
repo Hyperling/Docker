@@ -17,6 +17,6 @@ RUN rm -rfv files/README*
 CMD rm -rfv www && \
     git clone https://github.com/Hyperling/www www && \
     rm -rfv www/files && \
-    mv files www/ && \
+    mv -v files www/ && \
     cd www && \
     ./run.sh
