@@ -13,6 +13,10 @@ source $DIR/../../source.env
 
 echo -e "\n*** Files ***"
 
+# Files commands only work during normal operations.
+echo -e "\n`date` - Disable Maintenance Mode."
+docker exec -itu www-data nc-app ./occ maintenance:mode --off
+
 echo -e "\n`date` - Scanning Files"
 time docker exec -itu www-data nc-app ./occ files:scan --all
 
@@ -30,7 +34,8 @@ rm -rfv $DOCKER_HOME/Volumes/Nextcloud/nextcloud/data/appdata_*/preview/*
 
 echo -e "\n*** Database ***"
 
-echo -e "\n`date` - Enabling maintenance mode to avoid any DB issues."
+# Prevent any catastrophic collisions.
+echo -e "\n`date` - Enable Maintenance Mode"
 docker exec -itu www-data nc-app ./occ maintenance:mode --on
 
 echo -e "\n`date` - Delete Preview Records"
@@ -48,7 +53,7 @@ echo -e "\n`date` - Analyzing DB Tables"
 time docker exec -it nc-db mariadb-check \
 	-Aa --user="$MYSQL_USER" --password="$MYSQL_PASSWORD"
 
-echo -e "\n`date` - Optimizing DB Tables -- May take quite some time!!"
+echo -e "\n`date` - Optimizing DB Tables -- May take some time!!"
 time docker exec -itu www-data nc-db mariadb-check \
 	-Ao --user="$MYSQL_USER" --password="$MYSQL_PASSWORD"
 
@@ -56,7 +61,8 @@ time docker exec -itu www-data nc-db mariadb-check \
 
 # Purge Anything Else?
 
-echo -e "\n`date` - Disabling maintenance mode."
+# Return to normal.
+echo -e "\n`date` - Disable Maintenance Mode."
 docker exec -itu www-data nc-app ./occ maintenance:mode --off
 
 exit 0
