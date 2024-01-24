@@ -26,7 +26,7 @@ echo -e "\n`date` - Run Cron Job"
 $DOCKER_HOME/Config/Nextcloud/cron.sh && echo "Success!"
 
 # 2022-10-30 More additions after moving to Nextcloud version 25.
-echo -e "\n*** DATABASE ***\n"
+echo -e "\n*** DATABASE ***"
 
 echo -e "\n`date` - Add Missing Columns"
 docker exec -itu www-data nc-app ./occ db:add-missing-columns
