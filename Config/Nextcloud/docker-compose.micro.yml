@@ -81,7 +81,7 @@ services:
     links:
       - nc-db
       - nc-redis
-      - nc-oo
+  ##    - nc-oo
     volumes:
       - ../../Volumes/Nextcloud/nextcloud:/var/www/html
     environment:
