@@ -1,0 +1,18 @@
+# 2022-10-29
+# Hyperling.com configuration.
+
+version: '2'
+
+services:
+  app:
+    container_name: website-app
+    build: ./
+    restart: always
+    ports:
+      - 8317:8080
+    deploy:
+      mode: global
+      resources:
+        limits:
+          cpus: '0.10'
+          memory: 64M

@@ -1,0 +1,23 @@
+# 2023-07-29
+#
+# Local DNS server which properly handles DNS splitting.
+# Necessary when using junk ISP gateways and running a domain.
+# https://thekelleys.org.uk/dnsmasq/doc.html
+#
+
+version: '3'
+
+services:
+  app:
+    container_name: dns-app
+    build: ./
+    restart: always
+    ports:
+      - "53:53/udp"
+      - "53:53/tcp"
+    deploy:
+      mode: global
+      resources:
+        limits:
+          cpus: '0.10'
+          memory: 64M
