@@ -1,5 +1,6 @@
 # 2022-10-29
 # Hyperling.com configuration.
+# 2023-01-24 container needs 128M to get started fully then settles to 25M.
 
 version: '2'
 
@@ -15,4 +16,4 @@ services:
       resources:
         limits:
           cpus: '0.10'
-          memory: 32M
+          memory: 128M
