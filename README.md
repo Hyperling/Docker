@@ -27,7 +27,7 @@ Clone the project. You may choose anywhere, but `/opt/Docker` is recommended.
 git clone https://github.com/Hyperling/Docker /opt/Docker
 ```
 
-Load the environment variables.
+Load the environment variables from wherever you chose to put the project.
 ```
 source /opt/Docker/source.env
 ```
@@ -40,7 +40,7 @@ install.sh
 Copy default configuration for usage by management script.
 For example, to enable Nextcloud:
 ```
-cd /opt/Docker/Config/Nextcloud
+cd $DOCKER_HOME/Config/Nextcloud
 cp docker-compose.standard.yml docker-compose.yml
 cp env.standard .env
 cd $DOCKER_HOME
