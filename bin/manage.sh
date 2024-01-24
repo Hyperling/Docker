@@ -197,6 +197,8 @@ if [[ -n $clean ]]; then
 	docker container prune
 	docker volume prune
 	docker network prune
+	docker builder prune -a
+	docker system df
 fi
 
 # Follow the logs of a container.
