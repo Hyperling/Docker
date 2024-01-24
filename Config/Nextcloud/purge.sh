@@ -10,40 +10,52 @@ source $DIR/.env
 
 ## Main ##
 
-echo -e "\n*** Files ***\n"
+echo -e "\n*** Files ***"
 
-echo "`date` - Scanning Files"
+echo -e "\n`date` - Scanning Files"
 time docker exec -itu www-data nc-app ./occ files:scan --all
 
-echo "`date` - Cleaning Files"
+echo -e "\n`date` - Clean Files"
 time docker exec -itu www-data nc-app ./occ files:cleanup
 
-echo -e "\n*** Database ***\n"
+echo -e "\n`date` - Clean Versions"
+time docker exec -itu www-data nc-app ./occ files:cleanup
 
-echo "`date` - Enabling maintenance mode to avoid any DB issues."
+echo -e "\n`date` - Clean Trash"
+time docker exec -itu www-data nc-app ./occ trashbin:cleanup --all-users
+
+echo -e "\n`date` - Trash Previews"
+mv -v $DOCKER_HOME/Volumes/Nextcloud/nextcloud/data/appdata_*/preview ~/TRASH/
+
+echo -e "\n*** Database ***"
+
+echo -e "\n`date` - Enabling maintenance mode to avoid any DB issues."
 docker exec -itu www-data nc-app ./occ maintenance:mode --on
+
+echo -e "\n`date` - Delete Preview Records"
+docker exec -itu www-data nc-db /bin/bash -c \
+	"echo 'delete from oc_filecache where path like \"appdata_%/preview/%\";' | \
+	mysql --user=\"$MYSQL_USER\" --password=\"$MYSQL_PASSWORD\" $MYSQL_DATABASE"
 
 # https://mariadb.com/kb/en/mariadb-check/
 
-echo "`date` - Checking DB Tables"
+echo -e "\n`date` - Checking DB Tables"
 time docker exec -it nc-db mariadb-check \
 	-Ac --user="$MYSQL_USER" --password="$MYSQL_PASSWORD"
 
-echo "`date` - Analyzing DB Tables"
+echo -e "\n`date` - Analyzing DB Tables"
 time docker exec -it nc-db mariadb-check \
 	-Aa --user="$MYSQL_USER" --password="$MYSQL_PASSWORD"
 
-echo "`date` - Optimizing DB Tables -- May take quite some time!!"
+echo -e "\n`date` - Optimizing DB Tables -- May take quite some time!!"
 time docker exec -itu www-data nc-db mariadb-check \
 	-Ao --user="$MYSQL_USER" --password="$MYSQL_PASSWORD"
 
 # Purge Spreed Messages?
 
-# Purge File Cache?
-
 # Purge Anything Else?
 
-echo "`date` - Disabling maintenance mode."
+echo -e "\n`date` - Disabling maintenance mode."
 docker exec -itu www-data nc-app ./occ maintenance:mode --off
 
 exit 0
