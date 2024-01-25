@@ -193,10 +193,13 @@ fi
 # Clean every type of Docker object which can be abandoined by Compose.
 if [[ -n $clean ]]; then
 	echo -e "\n*** Cleaning Abandoned Objects ***"
+	docker system df
 	docker image prune -a
 	docker container prune
 	docker volume prune
 	docker network prune
+	docker builder prune -a
+	docker system df
 fi
 
 # Follow the logs of a container.

@@ -29,5 +29,8 @@ disabled
 # Ignore any .env files which are not explicitly committed to the project.
 *.env
 
-# 2024-01-23 Ignore true docker-compose files and only show example from now on.
+# 2024-01-23 Ignore true docker-compose files, only show examples from now on.
 docker-compose.yml
+
+# 2024-01-24 Hide static files for Hyperling.com.
+Config/Hyperling.com/files/*

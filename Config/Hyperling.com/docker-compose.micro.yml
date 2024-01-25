@@ -1,5 +1,6 @@
 # 2022-10-29
 # Hyperling.com configuration.
+# 2023-01-24 container needs 128M to get started fully then settles to 25M.
 
 version: '2'
 
@@ -10,9 +11,11 @@ services:
     restart: always
     ports:
       - 8317:8080
+    volumes:
+      - ./files:/var/www/api/files
     deploy:
       mode: global
       resources:
         limits:
           cpus: '0.10'
-          memory: 32M
+          memory: 128M

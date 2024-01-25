@@ -10,6 +10,8 @@ services:
     restart: always
     ports:
       - 8317:8080
+    volumes:
+      - ./files:/var/www/api/files
     deploy:
       mode: global
       resources:
