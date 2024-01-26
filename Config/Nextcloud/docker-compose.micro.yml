@@ -27,7 +27,7 @@ services:
     container_name: nc-db
     image: mariadb:10.6
     restart: always
-    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
+    command: --transaction-isolation=READ-COMMITTED --log-bin=binlog --binlog-format=ROW
     volumes:
       - ../../Volumes/Nextcloud/mariadb:/var/lib/mysql
     environment:
@@ -99,5 +99,5 @@ services:
       mode: global
       resources:
         limits:
-          cpus: '0.30'
-          memory: 512M
+          cpus: '0.35'
+          memory: 640M
