@@ -6,6 +6,7 @@
 
 DIR="$(dirname -- "${BASH_SOURCE[0]}")"
 PROG="$(basename -- "${BASH_SOURCE[0]}")"
+source $DIR/.env
 source $DIR/../../source.env
 
 ## Main ##
@@ -27,6 +28,14 @@ $DOCKER_HOME/Config/Nextcloud/cron.sh && echo "Success!"
 
 # 2022-10-30 More additions after moving to Nextcloud version 25.
 echo -e "\n*** DATABASE ***"
+
+# Clear DB errors by allowing the DB to perform any incremental upgrades.
+# https://jira.mariadb.org/browse/MDEV-26342
+echo -e "\n`date` - mysql_upgrade"
+docker exec -itu www-data nc-app ./occ maintenance:mode --on
+time docker exec -it nc-db mysql_upgrade \
+	-user="$MYSQL_USER" --password="$MYSQL_PASSWORD"
+docker exec -itu www-data nc-app ./occ maintenance:mode --off
 
 echo -e "\n`date` - Add Missing Columns"
 docker exec -itu www-data nc-app ./occ db:add-missing-columns
