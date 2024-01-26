@@ -34,7 +34,7 @@ echo -e "\n*** DATABASE ***"
 echo -e "\n`date` - mysql_upgrade"
 docker exec -itu www-data nc-app ./occ maintenance:mode --on
 time docker exec -it nc-db mysql_upgrade \
-	-user="$MYSQL_USER" --password="$MYSQL_PASSWORD"
+	-user="root" --password="$MYSQL_ROOT_PASSWORD"
 docker exec -itu www-data nc-app ./occ maintenance:mode --off
 
 echo -e "\n`date` - Add Missing Columns"
