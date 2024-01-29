@@ -4,3 +4,5 @@
 */5 * * * * /opt/Docker/Config/Nextcloud/cron.sh
 # Certbot
 0 23 * * * docker exec rp-certbot certbot renew
+# Refresh 'hyperling.com/photos/'
+0 0 * * * sh -c "rm /opt/Docker/Config/Hyperling.com/files/photos/index.html"; curl localhost:8317/photos >/dev/null 2>&1
