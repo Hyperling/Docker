@@ -6,7 +6,9 @@ version: '2'
 services:
   app:
     container_name: website-app
-    build: ./
+    build:
+      context: ./
+      network: host
     restart: always
     ports:
       - 8317:8080
