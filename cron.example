@@ -1,0 +1,6 @@
+# Dynamic DNS
+@hourly bash -c 'sleep $(( $RANDOM / 10 )); /opt/Docker/Config/DynamicDNS/update_dns.sh'
+# Nextcloud
+*/5 * * * * /opt/Docker/Config/Nextcloud/cron.sh
+# Certbot
+0 23 * * * docker exec rp-certbot certbot renew
