@@ -15,17 +15,18 @@ LATEST="`ls $DIR/Backup_*.zip | sort -r | head -n 1`"
 
 ## Main ##
 
-echo "Creating '$NEWFILE'."
-scp -P 4022 user@example.com:/tmp/Backup.zip $NEWFILE
+echo "`date` - Creating '$NEWFILE'."
+scp -P 4022 user@example.com:/tmp/Backup.zip $NEWFILE.tmp
+mv -v $NEWFILE.tmp $NEWFILE
 
 ## Validation ##
 
-# TBD: Can make this fancier, and do a real comparison of how much it grew.
+# TBD: Can make this fancier, such as doing a real comparison for size growth.
 
-echo "New backup's size:"
+echo "`date` - New backup's size:"
 du -h $NEWFILE
 
-echo "Previous backup's size:"
+echo "`date` - Previous backup's size:"
 du -h $LATEST
 
 ## Finish ##
