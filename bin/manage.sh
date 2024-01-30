@@ -70,7 +70,7 @@ function check_container() {
 	# Ensure a container which will be accessed is either running or starting.
 	# Parameters:
 	#   1) CONTAINER, either as ID or Name.
-	#   2) WHy the container is being checked.
+	#   2) Why the container is being checked.
 	container_to_check="$1"
 	reason_to_check="$2"
 
