@@ -1,0 +1,45 @@
+# 2022-10-05 Hyperling
+# Reverse Proxy with LetsEncrypt Certbot.
+# This is a revised version of these works:
+#   https://phoenixnap.com/kb/docker-nginx-reverse-proxy
+#   https://www.docker.com/blog/how-to-use-the-official-nginx-docker-image/
+#   https://pentacent.medium.com/nginx-and-lets-encrypt-with-docker-in-less-than-5-minutes-b4b8a60d3a71
+
+version: '3'
+
+services:
+
+  app:
+    container_name: rp-app
+    build:
+      context: ./
+      network: host
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ../../Volumes/ReverseProxy/letsencrypt:/etc/nginx/letsencrypt
+      - ../../Volumes/ReverseProxy/letsencrypt-certs:/etc/nginx/certs
+    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
+    deploy:
+      mode: global
+      resources:
+        limits:
+          cpus: '0.20'
+          memory: 64M
+
+  certbot:
+    container_name: rp-certbot
+    image: certbot/certbot
+    restart: always
+    volumes:
+      - ../../Volumes/ReverseProxy/letsencrypt:/etc/letsencrypt
+      - ../../Volumes/ReverseProxy/letsencrypt-certs:/etc/letsencrypt/nginx
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; cp -rL /etc/letsencrypt/live/* /etc/letsencrypt/nginx/; sleep 12h & wait $${!}; done;'"
+    deploy:
+      mode: global
+      resources:
+        limits:
+          cpus: '0.10'
+          memory: 32M

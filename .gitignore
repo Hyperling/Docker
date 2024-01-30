@@ -5,6 +5,7 @@ Volumes/*
 *.yml.*backup*
 *.yml.*Backup*
 *.yml.*BACKUP*
+*.yml.*bkp*
 
 # Ignore logs
 logs
@@ -16,14 +17,8 @@ Config/ReverseProxy/config/hosts/*
 Config/ReverseProxy/config/load.conf.d/*
 Config/ReverseProxy/config/mail.conf.d/*
 
-# Ignore downloaded mail server files.
-Config/MailServer/setup.sh
-
 # Ignore any private key information.
 private.key
-
-# Ignore secrets for Invidious.
-Config/Invidious/*.env
 
 # Ignore DNS config files, contain private settings.
 Config/DNS/config/*
@@ -33,3 +28,9 @@ disabled
 
 # Ignore any .env files which are not explicitly committed to the project.
 *.env
+
+# 2024-01-23 Ignore true docker-compose files, only show examples from now on.
+docker-compose.yml
+
+# 2024-01-24 Hide static files for Hyperling.com.
+Config/Hyperling.com/files/*

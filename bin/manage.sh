@@ -144,9 +144,9 @@ if [[ -n $up || -n $down || -n $build || -n $pull ]]; then
 		pwd
 
 		# Ensure .env files exist so that all compose variables are populated.
-		if [[ -e ./env.example && ! -e ./.env ]]; then
-			echo "WARNING: .env file was not found, copying example as placeholder."
-			cp -v env.example .env
+		if [[ -e ./env.standard && ! -e ./.env ]]; then
+			echo "WARNING: .env file was not found, copying standard as placeholder."
+			cp -v env.standard .env
 		fi
 
 		# Ensure all configuration files have been created.
@@ -193,10 +193,13 @@ fi
 # Clean every type of Docker object which can be abandoined by Compose.
 if [[ -n $clean ]]; then
 	echo -e "\n*** Cleaning Abandoned Objects ***"
+	docker system df
 	docker image prune -a
 	docker container prune
 	docker volume prune
 	docker network prune
+	docker builder prune -a
+	docker system df
 fi
 
 # Follow the logs of a container.

@@ -10,7 +10,9 @@ version: '3'
 services:
   app:
     container_name: dns-app
-    build: ./
+    build:
+      context: ./
+      network: host
     restart: always
     ports:
       - "53:53/udp"
