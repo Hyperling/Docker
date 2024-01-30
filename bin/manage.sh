@@ -70,7 +70,7 @@ function check_container() {
 	# Ensure a container which will be accessed is either running or starting.
 	# Parameters:
 	#   1) CONTAINER, either as ID or Name.
-	#   2) WHy the container is being checked.
+	#   2) Why the container is being checked.
 	container_to_check="$1"
 	reason_to_check="$2"
 
@@ -111,9 +111,9 @@ fi
 
 # Script will behave poorly if not run with admin privileges.
 if [[ $LOGNAME != "root" ]]; then
-	echo    "*************************************************************"
-	echo    "WARNING: Script is intended for root. Please su or sudo/doas."
-	echo -e "*************************************************************\n"
+	echo "*************************************************************"
+	echo "WARNING: Script is intended for root. Please su or sudo/doas."
+	echo "*************************************************************"
 fi
 
 # Options which only work if the container exists or is going to be started.

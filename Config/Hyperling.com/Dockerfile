@@ -15,4 +15,5 @@ CMD cd /var/www/api && \
     rm -rfv website/files && \
     mv -v website/* ./ && \
     rm -rfv website && \
+    echo "Starting Website" && \
     ./run.sh

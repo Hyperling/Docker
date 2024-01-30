@@ -11,7 +11,9 @@ services:
 
   app:
     container_name: rp-app
-    build: ./
+    build:
+      context: ./
+      network: host
     restart: always
     ports:
       - "80:80"

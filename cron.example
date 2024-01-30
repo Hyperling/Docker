@@ -1,0 +1,22 @@
+# The entries below should be added to the root crontab, taking into account
+# where you have placed your Docker Home. This assumes `/opt/Docker`.
+
+## Dynamic DNS ##
+# Ensure the Dynamic DNS matches the current production environment.
+@hourly bash -c 'sleep $(( $RANDOM / 10 )); /opt/Docker/Config/DynamicDNS/update_dns.sh'
+
+## Nextcloud ##
+# Run the cron job.
+*/5 * * * * /opt/Docker/Config/Nextcloud/cron.sh
+
+## Certbot ##
+# Ensure all domains have up to date certificates.
+0 23 * * * docker exec rp-certbot certbot renew
+
+## Hyperling.com/photos/ ##
+# Rebuild the cached index file each night.
+0 0 * * * sh -c "rm /opt/Docker/Config/Hyperling.com/files/photos/index.html"; curl localhost:8317/photos >/dev/null 2>&1
+
+## Backup ##
+# Create a new backup file for any listening pullers.
+0 2 * * * /opt/Docker/bin/backup.sh
