@@ -16,10 +16,13 @@ echo -e "\n*** APT ***"
 echo -e "\n`date` - Update Apt Cache"
 docker exec -it nc-app apt update -y
 
-echo -e "\n`date` - Install Additonal Software"
+echo -e "\n`date` - Install Additional Software"
 docker exec -it nc-app apt install -y sudo libmagickcore-6.q16-6-extra htop \
-	iputils-ping dnsutils vim libbz2-dev
+	iputils-ping dnsutils vim php-bz2 bzip2 libbz2-dev
 
+# 20240130
+# https://help.nextcloud.com/t/docker-image-setup-warning-missing-bz2-after-update-to-nc-28-0-0/176605
+echo -e "\n`date` - Compile PHP Modules"
 docker exec -it nc-app docker-php-ext-install bz2
 
 # 2023-12-04 Make sure cron and chmod commands get run.
