@@ -18,7 +18,7 @@ docker exec -it nc-app apt update -y
 
 echo -e "\n`date` - Install Additional Software"
 docker exec -it nc-app apt install -y sudo libmagickcore-6.q16-6-extra htop \
-	iputils-ping dnsutils vim php-bz2 bzip2 libbz2-dev
+	iputils-ping dnsutils vim bzip2 libbz2-dev # php-bz2
 
 # 20240130
 # https://help.nextcloud.com/t/docker-image-setup-warning-missing-bz2-after-update-to-nc-28-0-0/176605
