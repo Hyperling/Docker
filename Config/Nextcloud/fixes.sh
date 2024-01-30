@@ -18,7 +18,7 @@ docker exec -it nc-app apt update -y
 
 echo -e "\n`date` - Install Additonal Software"
 docker exec -it nc-app apt install -y sudo libmagickcore-6.q16-6-extra htop \
-	iputils-ping dnsutils vim
+	iputils-ping dnsutils vim php-bz2
 
 # 2023-12-04 Make sure cron and chmod commands get run.
 echo -e "\n*** CRON ***"
