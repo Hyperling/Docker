@@ -99,5 +99,5 @@ services:
       mode: global
       resources:
         limits:
-          cpus: '0.35'
+          cpus: '0.40'
           memory: 640M
