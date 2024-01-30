@@ -55,7 +55,7 @@ fi
 ## Main ##
 
 echo "`date` - Creating '$NEWFILE'."
-scp -P 4022 user@example.com:/tmp/Backup.zip $NEWFILE.tmp
+scp -P $port "$user@[$destination]":/tmp/Backup.zip $NEWFILE.tmp
 mv -v $NEWFILE.tmp $NEWFILE
 
 ## Validation ##
