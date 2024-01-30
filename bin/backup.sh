@@ -23,10 +23,10 @@ fi
 echo -e "\n`date` - Take down services for a cold backup."
 manage.sh -d
 
-echo -e "\n`date` - Create the new backup."
+echo -e "\n`date` - Create the backup for '$DOCKER_HOME'."
 cd $DOCKER_HOME
-pwd
-$time zip -r $file . 1>/dev/null
+$time zip -r $file.tmp . 1>/dev/null
+mv -v $file.tmp $file
 
 echo -e "\n`date` - Done with zipping, check size."
 ls -sh $file
