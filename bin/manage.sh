@@ -111,9 +111,9 @@ fi
 
 # Script will behave poorly if not run with admin privileges.
 if [[ $LOGNAME != "root" ]]; then
-	echo    "*************************************************************"
-	echo    "WARNING: Script is intended for root. Please su or sudo/doas."
-	echo -e "*************************************************************\n"
+	echo "*************************************************************"
+	echo "WARNING: Script is intended for root. Please su or sudo/doas."
+	echo "*************************************************************"
 fi
 
 # Options which only work if the container exists or is going to be started.
