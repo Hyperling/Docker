@@ -18,8 +18,6 @@
 #   2024-01-23
 #     Experimenting with how small a Nextcloud installation can survive.
 
-version: '3'
-
 services:
 
   ## MariaDB ##

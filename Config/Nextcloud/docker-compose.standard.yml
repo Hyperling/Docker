@@ -16,8 +16,6 @@
 #     to maintain and may allow the internal address to be based on container
 #     name instead of the docker hosts's IP.
 
-version: '3'
-
 services:
 
   ## MariaDB ##

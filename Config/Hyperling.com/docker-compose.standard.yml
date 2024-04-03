@@ -1,8 +1,6 @@
 # 2022-10-29
 # Hyperling.com configuration.
 
-version: '2'
-
 services:
   app:
     container_name: website-app

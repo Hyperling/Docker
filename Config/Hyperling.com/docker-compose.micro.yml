@@ -2,8 +2,6 @@
 # Hyperling.com configuration.
 # 2023-01-24 container needs 128M to get started fully then settles to 25M.
 
-version: '2'
-
 services:
   app:
     container_name: website-app
