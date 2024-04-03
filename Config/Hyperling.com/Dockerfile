@@ -3,7 +3,7 @@
 
 # Using Debian testing so that we use PHP >8. Otherwise the shebangs from
 # the include files (#!/usr/bin/php) show up on the website.
-FROM debian:testing
+FROM node:lts-slim
 
 # Install Dependencies
 RUN apt update && apt install -y sudo php-fpm nodejs npm
