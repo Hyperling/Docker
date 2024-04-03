@@ -73,7 +73,7 @@ services:
   ## Nextcloud ##
   nc-app:
     container_name: nc-app
-    image: nextcloud
+    image: nextcloud:stable
     restart: always
     ports:
       - 8080:80
