@@ -3,7 +3,7 @@
 
 services:
   app:
-    container_name: website-app
+    container_name: www-app
     build:
       context: ./
       network: host
