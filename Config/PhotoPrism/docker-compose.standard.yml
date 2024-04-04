@@ -35,8 +35,6 @@
 #   2023-09-15: File created and tweaked based on 'https://dl.photoprism.app/docker/docker-compose.yml'.
 ##
 
-version: '3.5'
-
 services:
   pp-app:
     container_name: pp-app

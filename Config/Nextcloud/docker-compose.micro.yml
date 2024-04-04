@@ -18,8 +18,6 @@
 #   2024-01-23
 #     Experimenting with how small a Nextcloud installation can survive.
 
-version: '3'
-
 services:
 
   ## MariaDB ##
@@ -74,7 +72,7 @@ services:
   ## Nextcloud ##
   nc-app:
     container_name: nc-app
-    image: nextcloud
+    image: nextcloud:stable
     restart: always
     ports:
       - 8080:80
