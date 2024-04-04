@@ -5,10 +5,16 @@
 # the include files (#!/usr/bin/php) show up on the website.
 FROM node:lts-slim
 
-# Install Dependencies
+# Cache System Dependencies
 RUN apt-get update && apt-get install -y git php-cli
 
-# Run Website
+# Cache Node Dependencies
+RUN mkdir -p /var/www/api
+RUN cd /var/www/api
+RUN echo '{ "dependencies": { "express" } }' > package.json
+RUN npm install
+
+# Install + Run Website
 CMD cd /var/www/api && \
     rm -rfv pages main.js run.sh && \
     git clone https://github.com/Hyperling/Website website && \
