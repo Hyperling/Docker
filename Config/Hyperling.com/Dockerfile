@@ -6,7 +6,7 @@
 FROM node:lts-slim
 
 # Install Dependencies
-RUN apt update && apt install -y git php-cli
+RUN apt-get update && apt-get install -y git php-cli
 
 # Run Website
 CMD cd /var/www/api && \
