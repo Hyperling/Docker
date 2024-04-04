@@ -7,6 +7,7 @@ FROM node:lts-slim
 
 # Install Dependencies
 RUN apt update && apt install -y git php-cli
+RUN npm install express
 
 # Run Website
 CMD cd /var/www/api && \
