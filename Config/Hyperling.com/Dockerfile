@@ -10,8 +10,8 @@ RUN apt-get update && apt-get install -y git php-cli
 
 # Cache Node Dependencies
 RUN mkdir -p /var/www/api
-RUN cd /var/www/api
-RUN echo '{ "dependencies": { "express" } }' > package.json
+WORKDIR /var/www/api
+RUN echo '{ "dependencies": { "express": "" } }' > package.json
 RUN npm install
 
 # Install + Run Website
