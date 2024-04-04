@@ -9,6 +9,9 @@ FROM node:lts-slim
 ##### Install Dependencies
 ####RUN apt update && apt install -y sudo php-fpm nodejs npm
 
+# Install Dependencies
+RUN apt update && apt install -y git
+
 # Run Website
 CMD cd /var/www/api && \
     rm -rfv pages main.js run.sh && \
