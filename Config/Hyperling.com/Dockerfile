@@ -5,10 +5,6 @@
 # the include files (#!/usr/bin/php) show up on the website.
 FROM node:lts-slim
 
-# Allow the run.sh script to determine if these are needed.
-##### Install Dependencies
-####RUN apt update && apt install -y sudo php-fpm nodejs npm
-
 # Install Dependencies
 RUN apt update && apt install -y git php-cli
 
