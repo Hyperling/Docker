@@ -10,7 +10,7 @@ FROM node:lts-slim
 ####RUN apt update && apt install -y sudo php-fpm nodejs npm
 
 # Install Dependencies
-RUN apt update && apt install -y git
+RUN apt update && apt install -y git php-cli
 
 # Run Website
 CMD cd /var/www/api && \
