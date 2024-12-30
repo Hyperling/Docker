@@ -1,0 +1,36 @@
+# 2024-12-30 Hyperling
+# Gitea self-hosted git server!
+#   https://hub.docker.com/r/gitea/gitea
+#   https://docs.gitea.com/installation/install-with-docker
+
+## TBD UNTESTED ##
+
+services:
+
+  app:
+    ## Database ##
+    # SQL Lite
+
+    ## App ##
+    container_name: gitea-app
+    image: gitea/gitea:latest
+    restart: always
+    ports:
+      - "8001:80"
+      - "3001:3000"
+      - "2201:22"
+    volumes:
+      - ../../Volumes/Gitea/gitea:/data
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    environment:
+      - USER_UID=1000
+      - USER_GID=1000
+    #networks:
+    #  - gitea
+    deploy:
+      mode: global
+      resources:
+        limits:
+          cpus: '0.10'
+          memory: 128M
