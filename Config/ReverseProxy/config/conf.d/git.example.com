@@ -51,6 +51,7 @@ server {
     # Send traffic to upstream server
     location / {
         ## General format is PROTOCOL://SERVER:PORT.
+        # This server connection is managed in the 'hosts/example.com' file.
         proxy_pass http://example-git-site;
     }
 
