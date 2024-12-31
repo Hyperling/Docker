@@ -3,7 +3,23 @@
 #   https://hub.docker.com/r/gitea/gitea
 #   https://docs.gitea.com/installation/install-with-docker
 
-## TBD UNTESTED ##
+## Test Results ##
+# 0.05 CPU, 64MB RAM
+# - Migrate https://github.com/hyperling/ansible
+#   - Page: 10512ms Template: 2111ms
+# - Migrate https://github.com/hyperling/website
+#   - Page: 6514ms  Template: 807ms
+# - Migrate https://github.com/hyperling/docker
+#   - Page: 8105ms  Template: 1201ms
+# 0.10 CPU, 128MB RAM
+# - Migrate https://github.com/hyperling/ansible
+#   - Page: 2501ms Template: 294ms
+# - Migrate https://github.com/hyperling/website
+#   - Page: 786ms Template: 194ms
+# - Migrate https://github.com/hyperling/docker
+#   - Page: 1283ms Template: 87ms
+
+# Takes nearly double the resources of Gogs, but has a nicer UI and more features.
 
 services:
 
@@ -16,7 +32,6 @@ services:
     image: gitea/gitea:latest
     restart: always
     ports:
-      - "8001:80"
       - "3001:3000"
       - "2201:22"
     volumes:
@@ -31,6 +46,12 @@ services:
     deploy:
       mode: global
       resources:
+        # Minimum requirements for processes to start properly. 
+        # Takes a while to start up and migrate projects, but does work.
+        ###limits:
+        ###  cpus: '0.05'
+        ###  memory: 64M
+        # Production-quality performance.
         limits:
           cpus: '0.10'
           memory: 128M

@@ -3,7 +3,23 @@
 #   https://hub.docker.com/r/gogs/gogs
 #   https://gist.github.com/ahromis/4ce4a58623847ca82cb1b745c2f83c82
 
-## TBD UNTESTED ##
+## Test Results ##
+# 0.02 CPU, 32MB RAM
+# - Migrate https://github.com/hyperling/ansible
+#   - Page: 20684ms Template: 3001ms
+# - Migrate https://github.com/hyperling/website
+#   - Page: 12495ms Template: 800ms
+# - Migrate https://github.com/hyperling/docker
+#   - Page: 9591ms  Template: 591ms
+# 0.05 CPU, 64MB RAM
+# - Migrate https://github.com/hyperling/ansible
+#   - Page: 4602ms Template: 2ms
+# - Migrate https://github.com/hyperling/website
+#   - Page: 3269ms Template: 1ms
+# - Migrate https://github.com/hyperling/docker
+#   - Page: 2481ms Template: 1ms
+
+# Takes nearly half the resources of Gitea, but has a more basic UI and may be lacking features.
 
 services:
 
@@ -16,8 +32,7 @@ services:
     image: gogs/gogs:latest
     restart: always
     ports:
-      - "8002:80"
-      - "3002:3000"
+      - "3000:3000"
       - "2202:22"
     volumes:
       - ../../Volumes/Gogs/gogs:/data
@@ -30,6 +45,12 @@ services:
     deploy:
       mode: global
       resources:
+        # Minimum requirements for processes to start properly. 
+        # Works pretty well! Takes a little to migrate, otherwise snappy!
         limits:
-          cpus: '0.10'
-          memory: 64M
+          cpus: '0.02'
+          memory: 32M
+        # Seamless performance.
+        ###limits:
+        ###  cpus: '0.05'
+        ###  memory: 64M
