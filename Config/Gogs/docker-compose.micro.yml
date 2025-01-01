@@ -1,0 +1,70 @@
+# 2024-12-30 Hyperling
+# Gogs self-hosted git server!
+#   https://hub.docker.com/r/gogs/gogs
+#   https://gist.github.com/ahromis/4ce4a58623847ca82cb1b745c2f83c82
+
+# Takes nearly half the resources of Gitea.
+# Has a more basic UI and may be lacking features. So slim though!!
+
+services:
+
+  app:
+    ## Database ##
+    # SQL Lite
+
+    ## App ##
+    container_name: gogs-app
+    image: gogs/gogs:latest
+    restart: always
+    ports:
+      - "3000:3000"
+      - "2202:22"
+    volumes:
+      - ../../Volumes/Gogs/gogs:/data
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    environment:
+      - "RUN_CROND=true"
+    #networks:
+    #  - gogs
+    deploy:
+      mode: global
+      resources:
+        limits:
+        # Minimum requirements for processes to start properly.
+        # Works pretty well! Takes a little to migrate, otherwise snappy!
+          ###cpus: '0.02'
+          ###memory: 32M
+        # Seamless performance.
+          ###cpus: '0.05'
+          ###memory: 64M
+        # Extra! Idles at 50M, will probably never use all this for 1 user.
+          ###cpus: '0.25'
+          ###memory: 192M
+        # Final thoughts after tests.
+          cpus: '0.50'
+          memory: 96M
+
+## Test Results ##
+# 0.02 CPU, 32MB RAM
+# - Migrate https://github.com/hyperling/ansible
+#   - Page: 20684ms Template: 3001ms, Page: 16503ms Template: 492ms
+# - Migrate https://github.com/hyperling/website
+#   - Page: 12495ms Template: 800ms
+# - Migrate https://github.com/hyperling/docker
+#   - Page: 9591ms  Template: 591ms
+# 0.05 CPU, 64MB RAM
+# - Migrate https://github.com/hyperling/ansible
+#   - Page: 4602ms Template: 2ms
+# - Migrate https://github.com/hyperling/website
+#   - Page: 3269ms Template: 1ms
+# - Migrate https://github.com/hyperling/docker
+#   - Page: 2481ms Template: 1ms
+# 0.25 CPU, 192MB RAM
+# - Migrate https://github.com/hyperling/ansible
+#   - Page: 575ms Template: 2ms
+# - Migrate https://github.com/hyperling/website
+#   - Page: 131ms Template: 4ms
+# - Migrate https://github.com/hyperling/docker
+#   - Page: 350ms Template: 1ms
+## ##
